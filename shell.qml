@@ -12,7 +12,7 @@ PanelWindow {
         right: true
     }
     implicitHeight: 30
-    color: "navy"
+    color: "#1a1b26"
     Bar {
         implicitHeight: topBar.implicitHeight
     }

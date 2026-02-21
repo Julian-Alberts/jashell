@@ -1,25 +1,33 @@
 import QtQuick
 import "../service/"
 
-Rectangle {
+Item {
     id: root
-
-    radius: 50
+    property string output
 
     Component.onCompleted: {}
-    implicitHeight: parent.implicitHeight
+    implicitHeight: 30
+    implicitWidth: row.implicitWidth
 
     Row {
         id: row
         spacing: 8
         anchors.verticalCenter: parent.verticalCenter
 
+        Text {
+            text: root.output
+            color: "white"
+        }
+
         Repeater {
             model: Niri.workspaces
-
-            Item {
+            delegate: Item {
                 implicitWidth: 10
                 implicitHeight: 10
+                visible: model.output == root.output
+                Component.onCompleted: {
+                    console.debug(model.output);
+                }
 
                 Rectangle {
                     anchors.fill: parent
