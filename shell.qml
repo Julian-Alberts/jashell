@@ -1,8 +1,8 @@
 import Quickshell.Bluetooth
 import Quickshell
 import QtQuick
-import "./service"
 import "./bar"
+import "./service/"
 
 PanelWindow {
     id: topBar
@@ -12,7 +12,7 @@ PanelWindow {
         right: true
     }
     implicitHeight: 30
-    color: "#1a1b26"
+    color: Config.background
     Bar {
         implicitHeight: topBar.implicitHeight
     }

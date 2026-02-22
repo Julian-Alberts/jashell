@@ -1,20 +1,21 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
+import "../service/"
 
 Rectangle {
     id: root
-    color: "gray"
+    color: Config.icon
     radius: 3
     implicitHeight: 20
-    implicitWidth: 75
+    implicitWidth: 40
     anchors.verticalCenter: parent.verticalCenter
     anchors.rightMargin: 5
     ProgressBar {
         id: progressBar
         anchors.centerIn: parent
-        implicitHeight: parent.implicitHeight - 10
-        implicitWidth: parent.implicitWidth - 10
+        implicitHeight: parent.implicitHeight - 6
+        implicitWidth: parent.implicitWidth - 6
         from: 0
         to: 1
         value: UPower.displayDevice?.percentage ?? 1
@@ -23,19 +24,19 @@ Rectangle {
             radius: 4
         }
         contentItem: Item {
-            implicitWidth: root.width - 10
-            implicitHeight: root.height - 10
+            implicitWidth: parent.implicitWidth
+            implicitHeight: parent.implicitHeight
             Rectangle {
                 implicitWidth: progressBar.visualPosition * parent.implicitWidth
                 implicitHeight: parent.implicitHeight
                 radius: progressBar.background.radius
                 color: {
                     if (progressBar.value > .5)
-                        return "#17a81a";
+                        return Config.green;
                     else if (progressBar.value > .3)
-                        return "yellow";
+                        return Config.yellow;
                     else
-                        return "red";
+                        return Config.red;
                 }
             }
         }
@@ -53,11 +54,7 @@ Rectangle {
     }
 
     Text {
-        text: {
-            const val = Math.floor(progressBar.value * 100);
-            console.log(val);
-            return val;
-        }
+        text: Math.floor(progressBar.value * 100)
         anchors.centerIn: progressBar
     }
     visible: UPower.displayDevice?.isLaptopBattery ?? false

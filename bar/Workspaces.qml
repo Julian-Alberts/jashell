@@ -16,7 +16,7 @@ Item {
 
         Text {
             text: root.output
-            color: "white"
+            color: Config.textColor
         }
 
         Repeater {
