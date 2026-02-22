@@ -38,12 +38,8 @@ Item {
         Repeater {
             model: filteredWorkspaces
             delegate: Item {
-                implicitWidth: 15
-                implicitHeight: 15
-                Component.onCompleted: {
-                    console.debug(model.output);
-                }
-
+                implicitWidth: workspaceName.implicitWidth < root.implicitHeight ? root.implicitHeight : workspaceName.implicitWidth
+                implicitHeight: 20
                 Rectangle {
                     anchors.fill: parent
                     color: model.isActive ? "#c0caf5" : "#565f89"
@@ -55,7 +51,8 @@ Item {
                     }
 
                     Text {
-                        text: model.id
+                        id: workspaceName
+                        text: model.name ? `[${model.index}] ${model.name}` : model.index
                         anchors.centerIn: parent
                         font.bold: true
                     }
