@@ -9,8 +9,14 @@ Item {
         Workspaces {
             output: "eDP-1"
         }
-        Battery {
+        Row {
             anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: 20
+            anchors.leftMargin: 20
+            spacing: 20
+            Battery {}
+            Clock {}
         }
     }
 }
