@@ -4,26 +4,31 @@ import "../service/"
 Item {
     id: root
     property string output
+    property bool multiple: false
+    property string displayName
 
     Component.onCompleted: {}
-    implicitHeight: 30
+    implicitHeight: 20
     implicitWidth: row.implicitWidth
+    anchors.verticalCenter: parent.verticalCenter
 
     Row {
         id: row
-        spacing: 8
+        spacing: 10
         anchors.verticalCenter: parent.verticalCenter
 
         Text {
-            text: root.output
+            text: root.displayName || root.output
             color: Config.textColor
+            visible: root.multiple
+            font.bold: true
         }
 
         Repeater {
             model: Niri.workspaces
             delegate: Item {
-                implicitWidth: 10
-                implicitHeight: 10
+                implicitWidth: 15
+                implicitHeight: 15
                 visible: model.output == root.output
                 Component.onCompleted: {
                     console.debug(model.output);
@@ -31,8 +36,7 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    radius: 5
-                    color: model.isActive ? "green" : "yellow"
+                    color: model.isActive ? "#c0caf5" : "#565f89"
 
                     MouseArea {
                         anchors.fill: parent
@@ -40,17 +44,10 @@ Item {
                         onClicked: Niri.focusWorkspaceById(model.id)
                     }
 
-                    Behavior on scale {
-                        PropertyAnimation {
-                            duration: 150
-                            easing.type: Easing.InOutQuad
-                        }
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 150
-                        }
+                    Text {
+                        text: model.id
+                        anchors.centerIn: parent
+                        font.bold: true
                     }
                 }
             }

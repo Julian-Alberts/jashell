@@ -3,20 +3,25 @@ import QtQuick
 Item {
     id: root
     anchors.fill: parent
+    anchors.rightMargin: 10
+    anchors.leftMargin: 10
+    anchors.topMargin: 5
+    anchors.bottomMargin: 5
     Row {
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
         spacing: 20
         Workspaces {
+            multiple: true
             output: "eDP-1"
+            displayName: "Main"
         }
-        Row {
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.rightMargin: 20
-            anchors.leftMargin: 20
-            spacing: 20
-            Battery {}
-            Clock {}
-        }
+    }
+    Row {
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: 20
+        Battery {}
+        Clock {}
     }
 }
