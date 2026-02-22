@@ -1,4 +1,5 @@
 import QtQuick
+import Qt.labs.qmlmodels 1.0
 import "../service/"
 
 Item {
@@ -24,12 +25,21 @@ Item {
             font.bold: true
         }
 
-        Repeater {
+        SortFilterProxyModel {
+            id: filteredWorkspaces
             model: Niri.workspaces
+
+            filters: ValueFilter {
+                roleName: "output"
+                value: root.output
+            }
+        }
+
+        Repeater {
+            model: filteredWorkspaces
             delegate: Item {
                 implicitWidth: 15
                 implicitHeight: 15
-                visible: model.output == root.output
                 Component.onCompleted: {
                     console.debug(model.output);
                 }

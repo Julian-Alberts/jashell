@@ -1,4 +1,5 @@
 import QtQuick
+import "../service/"
 
 Item {
     id: root

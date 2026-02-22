@@ -10,7 +10,4 @@ Niri {
     onErrorOccurred: function (error) {
         console.error("Error:", error);
     }
-    function workspacesOnOutput(output) {
-        return [];
-    }
 }
