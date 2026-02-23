@@ -11,11 +11,16 @@ Item {
     Row {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 20
+        spacing: 10
         Workspaces {
             multiple: true
-            output: "eDP-1"
+            output: "DP-1"
             displayName: "Main"
+        }
+        Workspaces {
+            multiple: true
+            output: "HDMI-A-1"
+            displayName: "Secondary"
         }
     }
     Row {
