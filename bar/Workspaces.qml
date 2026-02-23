@@ -1,5 +1,6 @@
 import QtQuick
 import Qt.labs.qmlmodels 1.0
+import Quickshell
 import "../service/"
 
 Item {
@@ -38,8 +39,19 @@ Item {
         Repeater {
             model: filteredWorkspaces
             delegate: Item {
+                id: workspaceItem
                 implicitWidth: workspaceName.implicitWidth < root.implicitHeight ? root.implicitHeight : workspaceName.implicitWidth
                 implicitHeight: 20
+
+                SortFilterProxyModel {
+                    id: filteredWindows
+                    model: Niri.windows
+
+                    filters: ValueFilter {
+                        roleName: "workspaceId"
+                        value: model.id
+                    }
+                }
                 Rectangle {
                     anchors.fill: parent
                     color: model.isActive ? "#c0caf5" : "#565f89"
@@ -57,7 +69,38 @@ Item {
                         font.bold: true
                     }
                 }
+                HoverHandler {
+                    id: hoverWorkspace
+                    acceptedPointerTypes: PointerDevice.All
+                    onHoveredChanged: {
+                        if (this.hovered) {
+                            hoverWsTimer.start();
+                            hoverWsCloseTimer.stop();
+                            thumbnail.windows = filteredWindows;
+                        } else {
+                            hoverWsTimer.stop();
+                            hoverWsCloseTimer.start();
+                        }
+                    }
+                }
             }
         }
+    }
+    Timer {
+        id: hoverWsTimer
+        interval: 500
+        onTriggered: {
+            thumbnail.preview = true;
+        }
+    }
+    Timer {
+        id: hoverWsCloseTimer
+        interval: 250
+        onTriggered: {
+            thumbnail.preview = false;
+        }
+    }
+    WindowThumbnailPopup {
+        id: thumbnail
     }
 }
