@@ -22,6 +22,7 @@ Item {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         spacing: 20
+        Media {}
         Battery {}
         Clock {}
     }
