@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
+import Quickshell
 import "../service/"
 
 Rectangle {
@@ -11,6 +12,7 @@ Rectangle {
     implicitWidth: 40
     anchors.verticalCenter: parent.verticalCenter
     anchors.rightMargin: 5
+    property bool showPercentage: true
     ProgressBar {
         id: progressBar
         anchors.centerIn: parent
@@ -56,6 +58,30 @@ Rectangle {
     Text {
         text: Math.floor(progressBar.value * 100)
         anchors.centerIn: progressBar
+        visible: root.showPercentage
+        font.bold: true
+    }
+    Text {
+        anchors.centerIn: progressBar
+        visible: !root.showPercentage
+        text: {
+            let time;
+            if (UPower.displayDevice.timeToEmpty > 0) time = UPower.displayDevice.timeToEmpty;
+            if (UPower.displayDevice.timeToFull > .1) time = UPower.displayDevice.timeToFull;
+            if (!time) return "Full"
+            const mins = time / 60;
+            const displayMins = String(Math.floor(mins % 60)).padStart(2, '0');
+            const displayHours = Math.floor(mins / 60);
+
+            return `${displayHours}:${displayMins}`;
+        }
+        font.bold: true
     }
     visible: UPower.displayDevice?.isLaptopBattery ?? false
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            root.showPercentage = !root.showPercentage;
+        }
+    }
 }
