@@ -77,6 +77,7 @@ Item {
                             hoverWsTimer.start();
                             hoverWsCloseTimer.stop();
                             thumbnail.windows = filteredWindows;
+                            thumbnail.anchorItem = workspaceItem;
                         } else {
                             hoverWsTimer.stop();
                             hoverWsCloseTimer.start();

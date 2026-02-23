@@ -7,9 +7,14 @@ PopupWindow {
     id: root
     property bool preview: false
     property var windows
+    property var anchorItem
     anchor {
-        item: parent
         rect.y: 30
+        item: anchorItem
+    }
+    onAnchorItemChanged: {
+        // Force position update
+        anchor.updateAnchor();
     }
     visible: windowHover.hovered || preview
     color: "transparent"
