@@ -4,20 +4,6 @@ import "../service"
 
 PopupWindow {
     color: "transparent"
-    property bool preview: false
-    onPreviewChanged: {
-        if (preview) {
-            visible = true
-            return
-        }
-        preview = false
-        hideTimer.restart()
-    }
-    Timer {
-        id: hideTimer
-        interval: 200
-        onTriggered: root.visible = false
-    }
     Rectangle {
         anchors.fill: parent
         color: Config.background
@@ -30,7 +16,6 @@ PopupWindow {
     HoverHandler {
         id: hoverHandler
         onHoveredChanged: {
-            hideTimer.stop()
             root.visible = hovered
         }
     }

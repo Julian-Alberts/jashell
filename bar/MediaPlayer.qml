@@ -7,12 +7,19 @@ import "../popup"
 
 Item {
     id: root
-    property MprisPlayer player: Mpris.players.values[2]
+    property MprisPlayer player: Mpris.players.values.find(p => p.isPlaying) || Mpris.players.values[0] || null
     anchors {
         top: parent.top
         bottom: parent.bottom
     }
     implicitWidth: row.implicitWidth
+    onPlayerChanged: {
+        if (player) {
+            positionTimer.restart()
+        } else {
+            positionTimer.stop()
+        }
+    }
     Row {
         id: row
         spacing: 5
@@ -20,6 +27,10 @@ Item {
         Ticker {
             message: player ? `${player.trackArtist || "Unknown Artist"}: ${player.trackTitle || "Unknown Title"}` : ""
             speed: 20
+            MouseArea {
+                anchors.fill: parent
+                onClicked: popup.visible = true
+            }
         }
         Text {
             text: secsToTime(player.position) + " / " + secsToTime(player.length)
@@ -84,18 +95,20 @@ Item {
             visible: player.canGoNext
         }
     }
-    HoverHandler {
-        id: hoverHandler
-        onHoveredChanged: {
-            popup.preview = hovered
-        }
-    }
     MediaPlayerPopup {
         id: popup
         player: root.player
         anchor {
             item: root
             edges: Edges.Bottom | Edges.Left
+        }
+    }
+    Timer {
+        running: player.isPlaying
+        interval: 1000
+        repeat: true
+        onTriggered: { 
+            player.positionChanged() 
         }
     }
     visible: player !== undefined

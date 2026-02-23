@@ -9,7 +9,7 @@ JaPopupWindow {
     id: root
     property MprisPlayer player: null
     implicitWidth: 300
-    implicitHeight: content.implicitHeight + 20
+    implicitHeight: content.implicitHeight
     Item {
         id: content
         anchors.centerIn: parent
@@ -17,13 +17,21 @@ JaPopupWindow {
         implicitHeight: column.implicitHeight
         Column {
             id: column
-            spacing: 20
-            padding: 10
-            Ticker {
-                message: player ? `${player.trackArtist || "Unknown Artist"}: ${player.trackTitle || "Unknown Title"}` : "Empty"
+            spacing: 10
+            padding: 20
+            Text {
+                text: player ? player.trackArtist || "Unknown Artist" : "No Player"
                 anchors.horizontalCenter: column.horizontalCenter
-                implicitHeight: 20
-                maxWidth: 280
+                color: Config.textColor
+                font.pixelSize: 16
+                font.bold: true
+            }
+            Text {
+                text: player ? player.trackTitle || "Unknown Title" : "No Player"
+                anchors.horizontalCenter: column.horizontalCenter
+                color: Config.textColor
+                font.pixelSize: 16
+                font.bold: true
             }
             Image {
                 id: trackArt
@@ -31,6 +39,7 @@ JaPopupWindow {
                 fillMode: Image.PreserveAspectFit
                 visible: source !== ""
                 width: 250
+                smooth: true
                 anchors.horizontalCenter: column.horizontalCenter
                 onStatusChanged: {
                     visible = (status === Image.Ready);
@@ -128,6 +137,20 @@ JaPopupWindow {
                 value: player.position
                 from: 0
                 to: player.length
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: Config.icon
+                    radius: 3
+                }
+                contentItem: Item {
+                    anchors.fill: parent
+                    Rectangle {
+                        width: parent.parent.visualPosition * parent.parent.width
+                        height: parent.height
+                        radius: 2
+                        color: Config.textColor
+                    }
+                }
             }
         }
     }
