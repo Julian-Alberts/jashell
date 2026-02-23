@@ -13,13 +13,6 @@ Item {
         bottom: parent.bottom
     }
     implicitWidth: row.implicitWidth
-    onPlayerChanged: {
-        if (player) {
-            positionTimer.restart()
-        } else {
-            positionTimer.stop()
-        }
-    }
     Row {
         id: row
         spacing: 5
@@ -111,5 +104,5 @@ Item {
             player.positionChanged() 
         }
     }
-    visible: player !== undefined
+    visible: !!player
 }

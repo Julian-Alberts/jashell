@@ -8,48 +8,51 @@ import "../bar"
 JaPopupWindow {
     id: root
     property MprisPlayer player: null
-    implicitWidth: 300
+    implicitWidth: 350
     implicitHeight: content.implicitHeight
     Item {
         id: content
         anchors.centerIn: parent
-        implicitWidth: column.implicitWidth
+        implicitWidth: 350
         implicitHeight: column.implicitHeight
         Column {
             id: column
             spacing: 10
             padding: 20
             Text {
-                text: player ? player.trackArtist || "Unknown Artist" : "No Player"
-                anchors.horizontalCenter: column.horizontalCenter
-                color: Config.textColor
-                font.pixelSize: 16
-                font.bold: true
-            }
-            Text {
                 text: player ? player.trackTitle || "Unknown Title" : "No Player"
                 anchors.horizontalCenter: column.horizontalCenter
                 color: Config.textColor
+                font.pixelSize: 20
+                font.bold: true
+            }
+            Text {
+                text: player ? player.trackArtist || "Unknown Artist" : "No Player"
+                anchors.horizontalCenter: column.horizontalCenter
+                color: Config.icon
                 font.pixelSize: 16
                 font.bold: true
             }
-            Image {
-                id: trackArt
-                source: player && player.trackArtUrl
-                fillMode: Image.PreserveAspectFit
-                visible: source !== ""
-                width: 250
-                smooth: true
+            Item {
+                implicitHeight: 200
+                implicitWidth: 200
                 anchors.horizontalCenter: column.horizontalCenter
-                onStatusChanged: {
-                    visible = (status === Image.Ready);
+                Image {
+                    anchors.centerIn: parent
+                    id: trackArt
+                    source: player && player.trackArtUrl
+                    fillMode: Image.PreserveAspectFit
+                    visible: source !== ""
+                    smooth: true
+                    onStatusChanged: {
+                        visible = (status === Image.Ready);
+                    }
                 }
-            }
-            Rectangle {
-                color: Config.icon
-                implicitWidth: 280
-                implicitHeight: implicitWidth
-                visible: !trackArt.visible 
+                Rectangle {
+                    color: Config.icon
+                    anchors.fill: parent
+                    visible: !trackArt.visible 
+                }
             }
             Row {
                 anchors.horizontalCenter: column.horizontalCenter
@@ -132,7 +135,7 @@ JaPopupWindow {
                 }
             }
             ProgressBar {
-                implicitWidth: 280
+                implicitWidth: 350 - 40
                 implicitHeight: 10
                 value: player.position
                 from: 0
