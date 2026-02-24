@@ -29,7 +29,7 @@ Item {
                         id: icon
                         color: dev.audio.muted ? Config.red : Config.textColor
                         font {
-                            family: "Font Awesome 7 Free Solid"
+                            family: Config.theme.icons.fontFamily
                             pixelSize: 15
                         }
                         anchors.verticalCenter: parent.verticalCenter
@@ -44,22 +44,22 @@ Item {
                         }
                         function sinkIcon(muted, volume) {
                             if (muted) {
-                                return "\uf6a9";
+                                return Config.theme.icons.volumeMuted;
                             } else if (volume > .80) {
-                                return "\uf028";
+                                return Config.theme.icons.volumeHigh;
                             } else if (volume > .40) {
-                                return "\uf6a8";
+                                return Config.theme.icons.volumeMedium;
                             } else if (volume > .10) {
-                                return "\uf027";
+                                return Config.theme.icons.volumeLow;
                             } else {
-                                return "\uf026";
+                                return Config.theme.icons.volumeOff;
                             }
                         }
                         function sourceIcon(muted) {
                             if (muted) {
-                                return "\uf131";
+                                return Config.theme.icons.microphoneMuted;
                             } else {
-                                return "\uf130";
+                                return Config.theme.icons.microphone;
                             }
                         }
                     }

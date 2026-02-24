@@ -12,7 +12,6 @@ FileView {
     property color icon: adapter.theme.colors.icon
 
     property JsonObject theme: adapter.theme
-    property JsonObject workspaces: adapter.workspaces
     
     path: Qt.resolvedUrl("../config.json")
     watchChanges: true
@@ -34,6 +33,13 @@ FileView {
                 property string media_pause: "\uf04c"
                 property string media_next: "\uf051"
                 property string media_previous: "\uf048"
+                property string microphone: "\uf130"
+                property string microphoneMuted: "\uf131"
+                property string volumeMuted: "\uf6a9"
+                property string volumeLow: "\uf027"
+                property string volumeMedium: "\uf6a8"
+                property string volumeHigh: "\uf028"
+                property string volumeOff: "\uf026"
             }
         }
     }
