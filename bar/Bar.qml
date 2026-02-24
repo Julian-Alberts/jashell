@@ -16,7 +16,7 @@ Item {
         spacing: 10
         Workspaces {
             output: screen.name
-            displayName: Config.workspaces.outputs[screen.name]?.display || ""
+            displayName: screen.name
         }
     }
     Row {

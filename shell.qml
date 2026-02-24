@@ -8,35 +8,34 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
         delegate: PanelWindow {
+            id: topBar
             property var modelData
             screen: modelData
-            id: topBar
             anchors {
                 top: true
                 left: true
                 right: true
             }
             implicitHeight: 30
-            color: Config.background
+            color: Config.theme.colors.background
             Bar {
-                screen: modelData
+                screen: topBar.modelData
                 implicitHeight: topBar.implicitHeight
             }
         }
     }
     Variants {
         model: Quickshell.screens
-        delegate: 
-            PanelWindow {
+        delegate: PanelWindow {
             property var modelData
             screen: modelData
-                anchors {
-                    top: true
-                    left: true
-                    bottom: true
-                }
-                implicitWidth: 50
-                color: Config.theme.colors.background
+            anchors {
+                top: true
+                left: true
+                bottom: true
             }
+            implicitWidth: 50
+            color: Config.theme.colors.background
+        }
     }
 }

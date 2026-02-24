@@ -10,7 +10,7 @@ PopupWindow {
     property var anchorItem
     anchor {
         rect.y: 30
-        item: anchorItem
+        item: anchorItem || parent
     }
     onAnchorItemChanged: {
         // Force position update
