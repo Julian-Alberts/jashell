@@ -22,7 +22,7 @@ Item {
             speed: 20
             MouseArea {
                 anchors.fill: parent
-                onClicked: popup.visible = true
+                onClicked: popup.visible = !popup.visible
             }
         }
         Text {

@@ -12,7 +12,7 @@ JaPopupWindow {
     implicitHeight: playerLoader.implicitHeight || 100
     Loader {
         id: playerLoader
-        active: root.player !== null
+        active: root.player !== null && root.visible
         sourceComponent: contentComponent
     }
     Component {
