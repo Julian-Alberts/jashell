@@ -36,56 +36,41 @@ Item {
                 return `${minutes}:${seconds.toString().padStart(2, '0')}`;
             }
         }
-        Rectangle {
-            color: "transparent"
-            implicitWidth: 13
-            implicitHeight: parent.height
-            Text {
-                font.family: "Font Awesome 7 Free Solid"
-                text: "\uf048"
-                color: Config.textColor
-                font.pixelSize: 16
-                anchors.centerIn: parent
-                 MouseArea {
-                    anchors.fill: parent
-                    onClicked: player.previous()
-                }
+        Loader {
+            sourceComponent: mediaButtonComponent
+            onLoaded: {
+                item.icon = Config.theme.icons.media_previous
+                item.enabled = player.canGoPrevious
+                item.onClicked = player.previous
             }
-            visible: player.canGoPrevious
         }
-        Rectangle {
-            color: "transparent"
-            implicitWidth: 15
-            implicitHeight: parent.implicitHeight
-            Text {
-                font.family: "Font Awesome 7 Free Solid"
-                text: player.playbackState === MprisPlaybackState.Playing ? "\uf04c" : "\uf04b"
-                color: Config.textColor
-                font.pixelSize: 16
-                anchors.centerIn: parent
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: player.togglePlaying()
-                }
+        Loader {
+            sourceComponent: mediaButtonComponent
+            onLoaded: {
+                item.icon = Config.theme.icons.media_pause
+                item.enabled = player.canPause
+                item.onClicked = player.pause
             }
-            visible: player.canPlay
+            visible: player.isPlaying
+            active: player.isPlaying
         }
-        Rectangle {
-            color: "transparent"
-            implicitWidth: 13
-            implicitHeight: parent.height
-            Text {
-                font.family: "Font Awesome 7 Free Solid"
-                text: "\uf051"
-                color: Config.textColor
-                font.pixelSize: 16
-                anchors.centerIn: parent
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: player.next()
-                }
+        Loader {
+            sourceComponent: mediaButtonComponent
+            onLoaded: {
+                item.icon = Config.theme.icons.media_play
+                item.enabled = player.canPlay
+                item.onClicked = player.play
             }
-            visible: player.canGoNext
+            visible: !player.isPlaying
+            active: !player.isPlaying
+        }
+        Loader {
+            sourceComponent: mediaButtonComponent
+            onLoaded: {
+                item.icon = Config.theme.icons.media_next
+                item.enabled = player.canGoNext
+                item.onClicked = player.next
+            }
         }
     }
     MediaPlayerPopup {
@@ -102,6 +87,30 @@ Item {
         repeat: true
         onTriggered: { 
             player.positionChanged() 
+        }
+    }
+    Component {
+        id: mediaButtonComponent
+        Item {
+            id: root
+            property string icon
+            property bool enabled
+            property var onClicked
+            implicitWidth: 20
+            implicitHeight: 20
+            Text {
+                font.family: Config.theme.icons.fontFamily
+                text: root.icon
+                color: root.enabled ? Config.textColor : Config.theme.colors.icon
+                font.pixelSize: 16
+                anchors.centerIn: parent
+                MouseArea {
+                    enabled: root.enabled
+                    anchors.fill: parent
+                    onClicked: root.onClicked()
+                    cursorShape: root.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+            }
         }
     }
     visible: !!player
