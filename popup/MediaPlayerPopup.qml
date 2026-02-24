@@ -46,8 +46,8 @@ JaPopupWindow {
                     implicitWidth: 200
                     anchors.horizontalCenter: column.horizontalCenter
                     Image {
-                        anchors.centerIn: parent
                         id: trackArt
+                        anchors.centerIn: parent
                         source: root.player.trackArtUrl
                         fillMode: Image.PreserveAspectFit
                         visible: source !== ""
@@ -59,7 +59,7 @@ JaPopupWindow {
                     Rectangle {
                         color: Config.icon
                         anchors.fill: parent
-                        visible: !trackArt.visible 
+                        visible: !trackArt.visible
                     }
                 }
                 Row {
@@ -90,56 +90,109 @@ JaPopupWindow {
                     spacing: 20
                     property int controlsHight: 30
                     anchors.horizontalCenter: column.horizontalCenter
-                    Rectangle {
-                        color: "transparent"
-                        implicitWidth: 13
-                        implicitHeight: parent.controlsHight
-                        Text {
-                            font.family: "Font Awesome 7 Free Solid"
-                            text: "\uf048"
-                            color: Config.textColor
-                            font.pixelSize: 16
-                            anchors.centerIn: parent
-                             MouseArea {
-                                anchors.fill: parent
-                                onClicked: player.previous()
+                    Repeater {
+                        model: [
+                            {
+                                icon: Config.theme.icons.mediaShuffle,
+                                supported: root.player.shuffleSupported && root.player.canControl,
+                                onClicked: () => root.player.shuffle = !root.player.shuffle
+                            },
+                            {
+                                icon: Config.theme.icons.media_previous,
+                                supported: root.player.canGoPrevious,
+                                onClicked: root.player.previous
+                            },
+                            {
+                                icon: root.player.isPlaying ? Config.theme.icons.media_pause : Config.theme.icons.media_play,
+                                supported: root.player.canPlay && root.player.canPause,
+                                onClicked: root.player.togglePlaying
+                            },
+                            {
+                                icon: Config.theme.icons.media_next,
+                                supported: root.player.canGoNext,
+                                onClicked: root.player.next
+                            },
+                            {
+                                icon: Config.theme.icons.mediaRepeat,
+                                supported: root.player.loopStatusSupported && root.player.canControl,
+                                onClicked: () => {
+                                    if (root.player.loopStatus === MprisPlayer.LoopStatus.None) {
+                                        root.player.loopStatus = MprisPlayer.LoopStatus.Track;
+                                    } else if (root.player.loopStatus === MprisPlayer.LoopStatus.Track) {
+                                        root.player.loopStatus = MprisPlayer.LoopStatus.Playlist;
+                                    } else {
+                                        root.player.loopStatus = MprisPlayer.LoopStatus.None;
+                                    }
+                                }
+                            }
+                        ].filter(button => button.supported)
+                        delegate: Item {
+                            implicitWidth: 20
+                            implicitHeight: 30
+                            Text {
+                                font.family: Config.theme.icons.fontFamily
+                                text: modelData.icon
+                                color: Config.theme.colors.text
+                                font.pixelSize: 16
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: modelData.onClicked()
+                                    cursorShape: Qt.PointingHandCursor
+                                }
                             }
                         }
-                        visible: player.canGoPrevious
                     }
-                    Rectangle {
-                        color: "transparent"
-                        implicitWidth: 15
-                        implicitHeight: parent.controlsHight
-                        Text {
-                            font.family: "Font Awesome 7 Free Solid"
-                            text: player.playbackState === MprisPlaybackState.Playing ? "\uf04c" : "\uf04b"
-                            color: Config.textColor
-                            font.pixelSize: 16
-                            anchors.centerIn: parent
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: player.togglePlaying()
+                    Text {
+                        id: volumeIcon
+                        visible: root.player.volumeSupported && root.player.canControl
+                        font.family: Config.theme.icons.fontFamily
+                        text: Config.theme.icons.volumeHigh
+                        color: Config.theme.colors.text
+                        font.pixelSize: 16
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: volumeSlider.visible = !volumeSlider.visible
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        Slider {
+                            id: volumeSlider
+                            from: 0
+                            to: 1
+                            value: root.player.volume
+                            onValueChanged: {
+                                root.player.volume = value;
+                            }
+                            orientation: Qt.Vertical
+                            implicitWidth: 20
+                            implicitHeight: 100
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                            }
+                            y: parent.y - 10 - implicitHeight
+                            background: Rectangle {
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                width: 4
+                                color: Config.icon
+                            }
+                            handle: Rectangle {
+                                anchors {
+                                    left: parent.left
+                                    right: parent.right
+                                }
+                                color: Config.textColor
+                                y: volumeSlider.visualPosition * volumeSlider.height - 5
+                                height: 10
+                                /*implicitHeight: parent.height * volumeSlider.visualPosition*/
+                            }
+                            visible: false
+                            HoverHandler {
+                                onHoveredChanged: {
+                                    if (volumeSlider.visible && !hovered) {
+                                        volumeSlider.visible = false;
+                                    }
+                                }
                             }
                         }
-                        visible: player.canPlay
-                    }
-                    Rectangle {
-                        color: "transparent"
-                        implicitWidth: 13
-                        implicitHeight: parent.controlsHight
-                        Text {
-                            font.family: "Font Awesome 7 Free Solid"
-                            text: "\uf051"
-                            color: Config.textColor
-                            font.pixelSize: 16
-                            anchors.centerIn: parent
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: player.next()
-                            }
-                        }
-                        visible: player.canGoNext
                     }
                 }
                 ProgressBar {
@@ -161,6 +214,19 @@ JaPopupWindow {
                             radius: 2
                             color: Config.textColor
                         }
+                    }
+                }
+                Component {
+                    id: mediaButtonDelegate
+                    Rectangle {
+                        id: root
+                        property string icon
+                        property var onClicked
+                        property bool enabled
+
+                        color: "transparent"
+                        implicitWidth: 13
+                        visible: enabled
                     }
                 }
             }

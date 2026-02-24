@@ -31,6 +31,8 @@ FileView {
                 property string media_pause: "\uf04c"
                 property string media_next: "\uf051"
                 property string media_previous: "\uf048"
+                property string mediaRepeat: "\uf363"
+                property string mediaShuffle: "\uf074"
                 property string microphone: "\uf130"
                 property string microphoneMuted: "\uf131"
                 property string volumeMuted: "\uf6a9"

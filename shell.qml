@@ -2,6 +2,7 @@ import Quickshell.Bluetooth
 import Quickshell
 import QtQuick
 import "./bar"
+import "./Sidebar/"
 import "./service/"
 
 ShellRoot {
@@ -27,6 +28,7 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
         delegate: PanelWindow {
+            id: sideBar
             property var modelData
             screen: modelData
             anchors {
@@ -36,6 +38,10 @@ ShellRoot {
             }
             implicitWidth: 50
             color: Config.theme.colors.background
+            Sidebar {
+                anchors.fill: parent
+                screen: sideBar.modelData
+            }
         }
     }
 }

@@ -39,37 +39,37 @@ Item {
         Loader {
             sourceComponent: mediaButtonComponent
             onLoaded: {
-                item.icon = Config.theme.icons.media_previous
-                item.enabled = player.canGoPrevious
-                item.onClicked = player.previous
+                item.icon = Config.theme.icons.media_previous;
+                item.enabled = root.player.canGoPrevious;
+                item.onClicked = root.player.previous;
             }
         }
         Loader {
             sourceComponent: mediaButtonComponent
             onLoaded: {
-                item.icon = Config.theme.icons.media_pause
-                item.enabled = player.canPause
-                item.onClicked = player.pause
+                item.icon = Config.theme.icons.media_pause;
+                item.enabled = root.player.canPause;
+                item.onClicked = root.player.pause;
             }
-            visible: player.isPlaying
-            active: player.isPlaying
+            visible: root.player.isPlaying
+            active: root.player.isPlaying
         }
         Loader {
             sourceComponent: mediaButtonComponent
             onLoaded: {
-                item.icon = Config.theme.icons.media_play
-                item.enabled = player.canPlay
-                item.onClicked = player.play
+                item.icon = Config.theme.icons.media_play;
+                item.enabled = root.player.canPlay;
+                item.onClicked = root.player.play;
             }
-            visible: !player.isPlaying
-            active: !player.isPlaying
+            visible: !root.player.isPlaying
+            active: !root.player.isPlaying
         }
         Loader {
             sourceComponent: mediaButtonComponent
             onLoaded: {
-                item.icon = Config.theme.icons.media_next
-                item.enabled = player.canGoNext
-                item.onClicked = player.next
+                item.icon = Config.theme.icons.media_next;
+                item.enabled = player.canGoNext;
+                item.onClicked = player.next;
             }
         }
     }
@@ -85,8 +85,8 @@ Item {
         running: player.isPlaying
         interval: 1000
         repeat: true
-        onTriggered: { 
-            player.positionChanged() 
+        onTriggered: {
+            player.positionChanged();
         }
     }
     Component {
