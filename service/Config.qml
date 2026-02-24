@@ -10,7 +10,10 @@ FileView {
     property color yellow: adapter.theme.colors.yellow
     property color green: adapter.theme.colors.green
     property color icon: adapter.theme.colors.icon
+
     property JsonObject theme: adapter.theme
+    property JsonObject workspaces: adapter.workspaces
+    
     path: Qt.resolvedUrl("../config.json")
     watchChanges: true
     onFileChanged: reload()

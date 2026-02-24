@@ -1,8 +1,10 @@
 import QtQuick
+import Quickshell
 import "../service/"
 
 Item {
     id: root
+    property ShellScreen screen
     anchors.fill: parent
     anchors.rightMargin: 10
     anchors.leftMargin: 10
@@ -13,14 +15,8 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 10
         Workspaces {
-            multiple: true
-            output: "DP-1"
-            displayName: "Main"
-        }
-        Workspaces {
-            multiple: true
-            output: "HDMI-A-1"
-            displayName: "Secondary"
+            output: screen.name
+            displayName: Config.workspaces.outputs[screen.name]?.display || ""
         }
     }
     Row {
