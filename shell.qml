@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import Quickshell.Bluetooth
 import Quickshell
 import QtQuick

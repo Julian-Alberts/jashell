@@ -25,12 +25,26 @@ Item {
             }
         }
     }
-    TaskList {
-        screen: root.screen
+    Column {
         anchors {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
+        }
+        bottomPadding: 10
+        spacing: 10
+        TaskList {
+            screen: root.screen
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+        }
+        SystemTray {
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
         }
     }
 }
