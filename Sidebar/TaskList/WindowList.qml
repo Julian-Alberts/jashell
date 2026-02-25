@@ -25,11 +25,29 @@ ListView {
         }
         Image {
             source: model.iconPath ? "file://" + model.iconPath : ""
-            sourceSize.width: root.width
-            sourceSize.height: root.width
-            visible: model.iconPath !== ""
+            sourceSize.width: root.width - 10
+            sourceSize.height: root.width - 10
             smooth: true
-            anchors.horizontalCenter: parent.horizontalCenter
+            visible: !!model.iconPath
+            anchors.centerIn: parent
+        }
+        Rectangle {
+            width: parent.width - 10
+            height: parent.height - 10
+            color: Config.theme.colors.icon
+            visible: !model.iconPath
+            anchors.centerIn: parent
+            radius: 5
+            Text {
+                width: parent.width - 10
+                height: parent.height - 10
+                clip: true
+                anchors.centerIn: parent
+                text: model.appId
+                color: Config.textColor
+                font.pixelSize: 12
+                wrapMode: Text.Wrap
+            }
         }
         MouseArea {
             anchors.fill: parent

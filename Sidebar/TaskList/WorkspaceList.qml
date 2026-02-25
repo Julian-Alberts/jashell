@@ -37,7 +37,16 @@ ListView {
                 color: Config.textColor
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 width: parent.width
+                height: implicitHeight + 4
+            }
+            Rectangle {
+                width: parent.width
+                height: 2
+                color: Config.theme.colors.text
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: model.isActive
             }
             WindowList {
                 model: filteredWindows
