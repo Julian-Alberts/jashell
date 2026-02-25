@@ -46,9 +46,10 @@ ListView {
                 height: 2
                 color: Config.theme.colors.text
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: model.isActive
+                visible: model.isActive && windowList.count > 0
             }
             WindowList {
+                id: windowList
                 model: filteredWindows
                 height: workspaceItem.showWindows ? contentHeight : 0
             }
