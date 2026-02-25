@@ -1,2 +1,2 @@
 singleton MediaPlayerPopup 1.0 popup/MediaPlayerPopup.qml
-singleton Config 1.0 config/Config.qml
+singleton Config 1.0 service/Config.qml
