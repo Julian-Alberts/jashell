@@ -35,8 +35,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("Track art clicked, toggling popup visibility");
-                    popup.visible = !popup.visible;
+                    MediaPlayerPopup.toggle(root.player, trackArt, Edges.Right | Edges.Top);
                 }
                 cursorShape: Qt.PointingHandCursor
             }
@@ -87,14 +86,6 @@ Item {
         }
         HoverHandler {
             id: hoverHandler
-        }
-        MediaPlayerPopup {
-            id: popup
-            player: root.player
-            anchor {
-                item: root
-                edges: Edges.Bottom | Edges.Right
-            }
         }
     }
 }

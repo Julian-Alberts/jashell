@@ -1,3 +1,4 @@
+pragma Singleton
 import Quickshell
 import Quickshell.Services.Mpris
 import QtQuick
@@ -8,6 +9,22 @@ import "../bar"
 JaPopupWindow {
     id: root
     property MprisPlayer player: null
+    function open(player: MprisPlayer, anchor, edges: Edges) {
+        this.anchor.item = anchor;
+        this.anchor.edges = edges;
+        this.player = player;
+        visible = true;
+    }
+    function close() {
+        visible = false;
+    }
+    function toggle(player: MprisPlayer, anchor, edges: Edges) {
+        if (visible && root.player === player && root.anchor.item === anchor) {
+            close();
+        } else {
+            open(player, anchor, edges);
+        }
+    }
     implicitWidth: 350
     implicitHeight: playerLoader.implicitHeight || 100
     Loader {
@@ -33,6 +50,9 @@ JaPopupWindow {
                     color: Config.textColor
                     font.pixelSize: 20
                     font.bold: true
+                    wrapMode: Text.Wrap
+                    horizontalAlignment: Text.AlignHCenter
+                    width: content.implicitWidth - 40
                 }
                 Text {
                     text: root.player.trackArtist || "Unknown Artist"
@@ -42,8 +62,8 @@ JaPopupWindow {
                     font.bold: true
                 }
                 Item {
-                    implicitHeight: 200
-                    implicitWidth: 200
+                    implicitHeight: trackArt.sourceSize.height > 200 ? 200 : trackArt.sourceSize.height
+                    implicitWidth: trackArt.sourceSize.width > 200 ? 200 : trackArt.sourceSize.width
                     anchors.horizontalCenter: column.horizontalCenter
                     Image {
                         id: trackArt
@@ -69,16 +89,19 @@ JaPopupWindow {
                         text: parent.secsToTime(root.player?.position)
                         color: Config.textColor
                         font.bold: true
+                        font.pixelSize: 16
                     }
                     Text {
                         text: " / "
                         color: Config.textColor
                         font.bold: true
+                        font.pixelSize: 16
                     }
                     Text {
                         text: parent.secsToTime(root.player?.length)
                         color: Config.textColor
                         font.bold: true
+                        font.pixelSize: 16
                     }
                     function secsToTime(secs) {
                         const minutes = Math.floor(secs / 60);

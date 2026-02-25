@@ -22,7 +22,7 @@ Item {
             speed: 20
             MouseArea {
                 anchors.fill: parent
-                onClicked: popup.visible = !popup.visible
+                onClicked: MediaPlayerPopup.toggle(root.player, root, Edges.Bottom | Edges.Left)
             }
         }
         Text {
@@ -71,14 +71,6 @@ Item {
                 item.enabled = player.canGoNext;
                 item.onClicked = player.next;
             }
-        }
-    }
-    MediaPlayerPopup {
-        id: popup
-        player: root.player
-        anchor {
-            item: root
-            edges: Edges.Bottom | Edges.Left
         }
     }
     Timer {
