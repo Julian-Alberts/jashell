@@ -31,7 +31,7 @@ JaPopupWindow {
                 id: menuList
                 width: contentItem.childrenRect.width
                 implicitHeight: contentItem.childrenRect.height
-                model: menuOpener.children.values
+                model: menuOpener.children.values.filter(item => !!item)
                 onModelChanged: {
                     this.forceLayout();
                 }
@@ -42,17 +42,18 @@ JaPopupWindow {
                     color: "transparent"
                     Loader {
                         id: itemLoader
-                        sourceComponent: {
+                        source: {
                             if (modelData.isSeparator) {
-                                return menuSeparator;
+                                return "../Components/SystemTray/Menu/Separator.qml";
                             }
                             switch (modelData.buttonType) {
                             case QsMenuButtonType.CheckBox:
-                                return menuCheckBox;
+                                return "../Components/SystemTray/Menu/CheckBox.qml";
                             case QsMenuButtonType.Radio:
-                                return menuRadioButton;
+                                return "../Components/SystemTray/Menu/RadioButton.qml";
                             case QsMenuButtonType.None:
-                                return menuButton;
+                            default:
+                                return "../Components/SystemTray/Menu/Button.qml";
                             }
                         }
                         Binding {
@@ -74,85 +75,6 @@ JaPopupWindow {
             QsMenuOpener {
                 id: menuOpener
                 menu: root.menu
-            }
-        }
-    }
-    Component {
-        id: menuSeparator
-        Rectangle {
-            property QsMenuHandle handle
-            property real menuWidth
-            onMenuWidthChanged: {
-                console.log("Menu width changed: " + menuWidth);
-            }
-            height: 2
-            width: menuWidth
-            anchors {
-                margins: 5
-            }
-            color: Config.theme.colors.text
-        }
-    }
-    Component {
-        id: menuCheckBox
-        Item {
-            id: root
-            property QsMenuHandle handle
-            property real menuWidth
-            implicitHeight: contentRow.height
-            implicitWidth: contentRow.width
-            Row {
-                id: contentRow
-                CheckBox {
-                    checkState: root.handle.checkState
-                }
-                Text {
-                    text: root.handle.text
-                    color: Config.theme.colors.red
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    root.handle.triggered();
-                    console.log("Clicked checkbox " + root.handle.text);
-                }
-                cursorShape: Qt.PointingHandCursor
-            }
-        }
-    }
-    Component {
-        id: menuRadioButton
-        Text {
-            property QsMenuHandle handle
-            property real menuWidth
-            text: "Unimplemented radio"
-            color: Config.theme.colors.red
-        }
-    }
-    Component {
-        id: menuButton
-        Rectangle {
-            property QsMenuHandle handle
-            property real menuWidth
-            width: buttonText.implicitWidth
-            height: buttonText.implicitHeight
-            color: hoverHandler.hovered ? Config.theme.colors.text : Config.theme.colors.background
-            Text {
-                id: buttonText
-                text: parent.handle.text
-                color: hoverHandler.hovered ? Config.theme.colors.background : Config.theme.colors.text
-                font.pixelSize: 14
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    handle.triggered();
-                }
-                cursorShape: Qt.PointingHandCursor
-            }
-            HoverHandler {
-                id: hoverHandler
             }
         }
     }
