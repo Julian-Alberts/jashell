@@ -83,33 +83,6 @@ JaPopupWindow {
                     }
                 }
                 Row {
-                    anchors.horizontalCenter: column.horizontalCenter
-                    visible: root.player.lengthSupported && root.player.positionSupported
-                    Text {
-                        text: parent.secsToTime(root.player?.position)
-                        color: Config.textColor
-                        font.bold: true
-                        font.pixelSize: 16
-                    }
-                    Text {
-                        text: " / "
-                        color: Config.textColor
-                        font.bold: true
-                        font.pixelSize: 16
-                    }
-                    Text {
-                        text: parent.secsToTime(root.player?.length)
-                        color: Config.textColor
-                        font.bold: true
-                        font.pixelSize: 16
-                    }
-                    function secsToTime(secs) {
-                        const minutes = Math.floor(secs / 60);
-                        const seconds = Math.floor(secs % 60);
-                        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                    }
-                }
-                Row {
                     spacing: 20
                     property int controlsHight: 30
                     anchors.horizontalCenter: column.horizontalCenter
@@ -118,7 +91,8 @@ JaPopupWindow {
                             {
                                 icon: Config.theme.icons.mediaShuffle,
                                 supported: root.player.shuffleSupported && root.player.canControl,
-                                onClicked: () => root.player.shuffle = !root.player.shuffle
+                                onClicked: () => root.player.shuffle = !root.player.shuffle,
+                                color: root.player.shuffle ? Config.theme.colors.text : Config.theme.colors.icon
                             },
                             {
                                 icon: Config.theme.icons.media_previous,
@@ -137,14 +111,22 @@ JaPopupWindow {
                             },
                             {
                                 icon: Config.theme.icons.mediaRepeat,
-                                supported: root.player.loopStatusSupported && root.player.canControl,
+                                iconExt: root.player.loopState === MprisLoopState.Track ? "1" : "",
+                                color: root.player.loopState === MprisLoopState.None ? Config.theme.colors.icon : Config.theme.colors.text,
+                                supported: root.player.loopSupported && root.player.canControl,
                                 onClicked: () => {
-                                    if (root.player.loopStatus === MprisPlayer.LoopStatus.None) {
-                                        root.player.loopStatus = MprisPlayer.LoopStatus.Track;
-                                    } else if (root.player.loopStatus === MprisPlayer.LoopStatus.Track) {
-                                        root.player.loopStatus = MprisPlayer.LoopStatus.Playlist;
-                                    } else {
-                                        root.player.loopStatus = MprisPlayer.LoopStatus.None;
+                                    switch (root.player.loopState) {
+                                    case MprisLoopState.None:
+                                        root.player.loopState = MprisLoopState.Track;
+                                        break;
+                                    case MprisLoopState.Track:
+                                        root.player.loopState = MprisLoopState.Playlist;
+                                        break;
+                                    case MprisLoopState.Playlist:
+                                        root.player.loopState = MprisLoopState.None;
+                                        break;
+                                    default:
+                                        root.player.loopState = MprisLoopState.None;
                                     }
                                 }
                             }
@@ -155,8 +137,27 @@ JaPopupWindow {
                             Text {
                                 font.family: Config.theme.icons.fontFamily
                                 text: modelData.icon
-                                color: Config.theme.colors.text
+                                color: modelData.color || Config.theme.colors.text
                                 font.pixelSize: 16
+                                Rectangle {
+                                    width: 12
+                                    height: width
+                                    color: Config.theme.colors.text
+                                    visible: !!modelData.iconExt
+                                    radius: width / 2
+                                    x: parent.x + parent.width - width / 2
+                                    y: parent.y - height / 2
+                                    Text {
+                                        width: 10
+                                        height: 10
+                                        text: modelData.iconExt || ""
+                                        color: Config.theme.colors.background
+                                        font.pixelSize: 10
+                                        anchors.fill: parent
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                    }
+                                }
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: modelData.onClicked()
@@ -218,38 +219,72 @@ JaPopupWindow {
                         }
                     }
                 }
-                ProgressBar {
-                    implicitWidth: 350 - 40
-                    implicitHeight: 10
-                    value: root.player?.position
-                    from: 0
-                    to: root.player?.length
-                    background: Rectangle {
-                        anchors.fill: parent
-                        color: Config.icon
-                        radius: 3
+                Row {
+                    spacing: 10
+                    anchors {
+                        horizontalCenter: column.horizontalCenter
                     }
-                    contentItem: Item {
-                        anchors.fill: parent
-                        Rectangle {
-                            width: parent.parent.visualPosition * parent.parent.width
-                            height: parent.height
-                            radius: 2
-                            color: Config.textColor
+                    visible: root.player.lengthSupported && root.player.positionSupported
+                    ProgressBar {
+                        anchors.verticalCenter: parent.verticalCenter
+                        implicitWidth: 350 - 40 - timeRow.width
+                        implicitHeight: 10
+                        value: root.player?.position
+                        from: 0
+                        to: root.player?.length
+                        background: Rectangle {
+                            anchors.fill: parent
+                            color: Config.icon
+                            radius: 3
+                        }
+                        contentItem: Item {
+                            anchors.fill: parent
+                            Rectangle {
+                                width: parent.parent.visualPosition * parent.parent.width
+                                height: parent.height
+                                radius: 2
+                                color: Config.textColor
+                            }
                         }
                     }
-                }
-                Component {
-                    id: mediaButtonDelegate
-                    Rectangle {
-                        id: root
-                        property string icon
-                        property var onClicked
-                        property bool enabled
+                    Component {
+                        id: mediaButtonDelegate
+                        Rectangle {
+                            id: root
+                            property string icon
+                            property var onClicked
+                            property bool enabled
 
-                        color: "transparent"
-                        implicitWidth: 13
-                        visible: enabled
+                            color: "transparent"
+                            implicitWidth: 13
+                            visible: enabled
+                        }
+                    }
+                    Row {
+                        id: timeRow
+                        Text {
+                            text: parent.secsToTime(root.player?.position)
+                            color: Config.textColor
+                            font.bold: true
+                            font.pixelSize: 16
+                        }
+                        Text {
+                            text: " / "
+                            color: Config.textColor
+                            font.bold: true
+                            font.pixelSize: 16
+                        }
+                        Text {
+                            text: parent.secsToTime(root.player?.length)
+                            color: Config.textColor
+                            font.bold: true
+                            font.pixelSize: 16
+                        }
+                        function secsToTime(secs) {
+                            const minutes = Math.floor(secs / 60);
+                            const seconds = Math.floor(secs % 60);
+                            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        }
                     }
                 }
             }
