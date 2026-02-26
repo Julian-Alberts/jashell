@@ -51,7 +51,13 @@ ListView {
             WindowList {
                 id: windowList
                 model: filteredWindows
+                clip: true
                 height: workspaceItem.showWindows ? contentHeight : 0
+                Behavior on height {
+                    NumberAnimation {
+                        duration: 200
+                    }
+                }
             }
         }
         HoverHandler {
