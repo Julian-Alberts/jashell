@@ -31,7 +31,6 @@ Item {
                         case Qt.LeftButton:
                             if (!modelData.onlyMenu) {
                                 modelData.activate();
-                                console.log("Activating " + modelData.id);
                                 break;
                             }
                         case Qt.RightButton:
@@ -41,14 +40,12 @@ Item {
                             SystemTrayMenu.anchor.item = icon;
                             SystemTrayMenu.visible = true;
                             SystemTrayMenu.edges = Edges.Right;
-                            console.log("Opening menu for " + modelData.id);
                             break;
                         case Qt.MiddleButton:
                             modelData.secondaryActivate();
-                            console.log("Secondary activating " + modelData.id);
                             break;
                         default:
-                            console.log("Unknown button " + ev.button + " clicked on " + modelData.id);
+                            console.warn("Unknown button " + ev.button + " clicked on " + modelData.id);
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick
+import QtQuick.Controls
 import Quickshell
 import "../service"
 
@@ -94,11 +95,30 @@ JaPopupWindow {
     }
     Component {
         id: menuCheckBox
-        Text {
+        Item {
+            id: root
             property QsMenuHandle handle
             property real menuWidth
-            text: "Unimplemented checkbox"
-            color: Config.theme.colors.red
+            implicitHeight: contentRow.height
+            implicitWidth: contentRow.width
+            Row {
+                id: contentRow
+                CheckBox {
+                    checkState: root.handle.checkState
+                }
+                Text {
+                    text: root.handle.text
+                    color: Config.theme.colors.red
+                }
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.handle.triggered();
+                    console.log("Clicked checkbox " + root.handle.text);
+                }
+                cursorShape: Qt.PointingHandCursor
+            }
         }
     }
     Component {
