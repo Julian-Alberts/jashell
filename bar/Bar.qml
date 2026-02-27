@@ -1,16 +1,13 @@
 import QtQuick
+import QtQuick.Controls
 import Quickshell
-import "../service/"
+import Quickshell.Services.UPower
 import "../Config/"
 
-Item {
+Pane {
     id: root
     property ShellScreen screen
     anchors.fill: parent
-    anchors.rightMargin: 10
-    anchors.leftMargin: 10
-    anchors.topMargin: 5
-    anchors.bottomMargin: 5
     Loader {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
@@ -35,7 +32,8 @@ Item {
                 bottom: parent.bottom
             }
             sourceComponent: Battery {}
-            active: Settings.layout.topbar.showBattery
+            active: Settings.layout.topbar.showBattery && UPower.displayDevice.isLaptopBattery
+            visible: active
         }
         Loader {
             anchors {

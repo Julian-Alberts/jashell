@@ -1,4 +1,5 @@
 pragma Singleton
+pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell.Io
 import Quickshell
@@ -41,5 +42,28 @@ Singleton {
                 property string volumeOff: "\uf026"
             }
         }
+    }
+    property Palette palette: Palette {
+        accent: "red"
+        alternateBase: adapter.colors.background
+        base: adapter.colors.background
+        brightText: "red"
+        button: adapter.colors.background
+        buttonText: apapter.colors.text
+        dark: "red"
+        highlight: "red"
+        highlightedText: "red"
+        light: "red"
+        link: "red"
+        linkVisited: "red"
+        mid: "red"
+        midlight: "red"
+        placeholderText: "red"
+        shadow: "red"
+        text: adapter.colors.text
+        toolTipBase: "red"
+        toolTipText: "red"
+        window: adapter.colors.background
+        windowText: adapter.colors.text
     }
 }

@@ -1,6 +1,8 @@
 import QtQuick
+import QtQuick.Controls
 import Quickshell.Services.Pipewire
 import "../service"
+import "../Config"
 
 Item {
     id: root
@@ -21,57 +23,51 @@ Item {
             Row {
                 id: row
                 anchors.verticalCenter: parent.verticalCenter
+                height: parent.height
                 spacing: 5
-                Item {
-                    implicitHeight: 20
-                    implicitWidth: 20
-                    Text {
-                        id: icon
-                        color: dev.audio.muted ? Config.red : Config.textColor
-                        font {
-                            family: Config.theme.icons.fontFamily
-                            pixelSize: 15
+                Label {
+                    id: icon
+                    color: dev.audio.muted ? Theme.colors.red : palette.text
+                    font {
+                        family: Theme.fonts.icons
+                        pixelSize: 15
+                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: {
+                        const muted = dev.audio.muted;
+                        if (dev.isSink) {
+                            const volume = dev.audio.volume;
+                            return sinkIcon(muted, volume);
+                        } else {
+                            return sourceIcon(muted);
                         }
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: {
-                            const muted = dev.audio.muted;
-                            if (dev.isSink) {
-                                const volume = dev.audio.volume;
-                                return sinkIcon(muted, volume);
-                            } else {
-                                return sourceIcon(muted);
-                            }
+                    }
+                    function sinkIcon(muted, volume) {
+                        if (muted) {
+                            return Theme.icons.volumeMuted;
+                        } else if (volume > .80) {
+                            return Theme.icons.volumeHigh;
+                        } else if (volume > .40) {
+                            return Theme.icons.volumeMedium;
+                        } else if (volume > .10) {
+                            return Theme.icons.volumeLow;
+                        } else {
+                            return Theme.icons.volumeOff;
                         }
-                        function sinkIcon(muted, volume) {
-                            if (muted) {
-                                return Config.theme.icons.volumeMuted;
-                            } else if (volume > .80) {
-                                return Config.theme.icons.volumeHigh;
-                            } else if (volume > .40) {
-                                return Config.theme.icons.volumeMedium;
-                            } else if (volume > .10) {
-                                return Config.theme.icons.volumeLow;
-                            } else {
-                                return Config.theme.icons.volumeOff;
-                            }
-                        }
-                        function sourceIcon(muted) {
-                            if (muted) {
-                                return Config.theme.icons.microphoneMuted;
-                            } else {
-                                return Config.theme.icons.microphone;
-                            }
+                    }
+                    function sourceIcon(muted) {
+                        if (muted) {
+                            return Theme.icons.microphoneMuted;
+                        } else {
+                            return Theme.icons.microphone;
                         }
                     }
                 }
-                Item {
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    Text {
-                        anchors.right: parent.right
-                        color: icon.color
-                        text: Math.round(dev.audio.volume * 100)
-                    }
+                Label {
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: icon.color
+                    font.bold: true
+                    text: Math.round(dev.audio.volume * 100)
                 }
             }
             MouseArea {

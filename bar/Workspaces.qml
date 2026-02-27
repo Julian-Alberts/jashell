@@ -1,7 +1,9 @@
 import QtQuick
+import QtQuick.Controls
 import Qt.labs.qmlmodels 1.0
 import Quickshell
 import "../service/"
+import "../Config/"
 
 Item {
     id: root
@@ -19,9 +21,8 @@ Item {
         spacing: 10
         anchors.verticalCenter: parent.verticalCenter
 
-        Text {
+        Label {
             text: root.displayName || root.output
-            color: Config.textColor
             visible: root.multiple
             font.bold: true
         }
@@ -38,39 +39,25 @@ Item {
 
         Repeater {
             model: filteredWorkspaces
-            delegate: Item {
-                id: workspaceItem
-                implicitWidth: workspaceName.implicitWidth < root.implicitHeight ? root.implicitHeight : workspaceName.implicitWidth
+            delegate: Button {
+                id: workspaceName
+                implicitWidth: 20
                 implicitHeight: 20
-
-                SortFilterProxyModel {
-                    id: filteredWindows
-                    model: Niri.windows
-
-                    filters: ValueFilter {
-                        roleName: "workspaceId"
-                        value: model.id
-                    }
+                onClicked: Niri.focusWorkspaceById(model.id)
+                text: model.name ? `[${model.index}] ${model.name}` : model.index
+                background: Rectangle {
+                    color: model.isActive ? palette.text : Theme.colors.icon
                 }
-                Rectangle {
-                    anchors.fill: parent
-                    color: model.isActive ? "#c0caf5" : "#565f89"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: Niri.focusWorkspaceById(model.id)
-                    }
-
-                    Text {
-                        id: workspaceName
-                        text: model.name ? `[${model.index}] ${model.name}` : model.index
-                        anchors.centerIn: parent
-                        font.bold: true
-                    }
+                contentItem: Label {
+                    text: workspaceName.text
+                    font.bold: true
+                    color: model.isActive ? Theme.colors.background : palette.window
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
                 HoverHandler {
                     id: hoverWorkspace
+                    cursorShape: Qt.PointingHandCursor
                     acceptedPointerTypes: PointerDevice.All
                     onHoveredChanged: {
                         if (this.hovered) {
@@ -82,6 +69,15 @@ Item {
                             hoverWsTimer.stop();
                             hoverWsCloseTimer.start();
                         }
+                    }
+                }
+                SortFilterProxyModel {
+                    id: filteredWindows
+                    model: Niri.windows
+
+                    filters: ValueFilter {
+                        roleName: "workspaceId"
+                        value: model.id
                     }
                 }
             }

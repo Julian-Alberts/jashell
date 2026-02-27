@@ -1,16 +1,17 @@
 import QtQuick
+import QtQuick.Controls
 import "../service"
+
 Item {
     id: root
     implicitHeight: parent.implicitHeight
     implicitWidth: tickerText.implicitWidth > maxWidth ? maxWidth : tickerText.implicitWidth
     clip: true
     property string message: ""
-    property var textStyle: {return {color: Config.textColor, bold: true}}
     property int speed: 40
     property int maxWidth: 300
     onMessageChanged: {
-        tickerAnimation.restart()
+        tickerAnimation.restart();
     }
 
     Row {
@@ -18,16 +19,14 @@ Item {
         spacing: 50
         x: 0
         anchors.verticalCenter: parent.verticalCenter
-        Text {
+        Label {
             id: tickerText
             text: root.message
-            color: root.textStyle.color
-            font.bold: root.textStyle.bold
+            font.bold: true
         }
-        Text {
+        Label {
             text: root.message
-            color: root.textStyle.color
-            font.bold: root.textStyle.bold
+            font.bold: true
         }
         SequentialAnimation {
             id: tickerAnimation
@@ -44,7 +43,9 @@ Item {
             }
 
             // Optional pause before restarting
-            PauseAnimation { duration: 0 }
+            PauseAnimation {
+                duration: 0
+            }
         }
     }
     visible: message !== ""

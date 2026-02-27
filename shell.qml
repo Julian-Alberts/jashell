@@ -2,9 +2,11 @@
 import Quickshell.Bluetooth
 import Quickshell
 import QtQuick
+import QtQuick.Controls
 import "./bar"
 import "./Sidebar/"
 import "./service/"
+import "./Config/"
 
 ShellRoot {
     Variants {
@@ -19,8 +21,8 @@ ShellRoot {
                 right: true
             }
             implicitHeight: 30
-            color: Config.theme.colors.background
             Bar {
+                palette: Theme.palette
                 screen: topBar.modelData
                 implicitHeight: topBar.implicitHeight
             }

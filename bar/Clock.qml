@@ -1,6 +1,6 @@
 import QtQuick
+import QtQuick.Controls
 import Quickshell
-import "../service"
 
 Item {
     implicitWidth: text.implicitWidth
@@ -9,10 +9,9 @@ Item {
         id: clock
         precision: SystemClock.Minutes
     }
-    Text {
+    Label {
         id: text
         text: Qt.formatDateTime(clock.date, "yyyy-MM-ddThh:mm")
-        color: Config.theme.colors.text
         font.bold: true
     }
 }
