@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "../service/"
+import "../Config/"
 
 Item {
     id: root
@@ -10,22 +11,57 @@ Item {
     anchors.leftMargin: 10
     anchors.topMargin: 5
     anchors.bottomMargin: 5
-    Row {
+    Loader {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 10
-        Workspaces {
-            output: screen.name
-            displayName: screen.name
-        }
+        sourceComponent: workspaceDelegate
+        active: Settings.layout.topbar.showWorkspaces
     }
     Row {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
+        height: 20
         spacing: 20
-        Media {}
-        Battery {}
-        Clock {}
-        SystemTray {}
+        Media {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+            height: parent.height
+        }
+        Loader {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+            sourceComponent: Battery {}
+            active: Settings.layout.topbar.showBattery
+        }
+        Loader {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+            sourceComponent: Clock {}
+            active: Settings.layout.topbar.showClock
+        }
+        Loader {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+            sourceComponent: SystemTray {}
+            active: Settings.layout.topbar.showSystemTray
+        }
+    }
+    Component {
+        id: workspaceDelegate
+        Row {
+            spacing: 10
+            Workspaces {
+                output: screen.name
+                displayName: screen.name
+            }
+        }
     }
 }

@@ -8,10 +8,6 @@ import "../popup"
 Item {
     id: root
     property MprisPlayer player: Mpris.players.values.find(p => p.isPlaying) || Mpris.players.values[0] || null
-    anchors {
-        top: parent.top
-        bottom: parent.bottom
-    }
     implicitWidth: row.implicitWidth
     Row {
         id: row

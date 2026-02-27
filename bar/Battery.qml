@@ -8,15 +8,12 @@ Rectangle {
     id: root
     color: Config.icon
     radius: 3
-    implicitHeight: 20
     implicitWidth: 40
-    anchors.verticalCenter: parent.verticalCenter
-    anchors.rightMargin: 5
     property bool showPercentage: true
     ProgressBar {
         id: progressBar
         anchors.centerIn: parent
-        implicitHeight: parent.implicitHeight - 6
+        implicitHeight: parent.height - 6
         implicitWidth: parent.implicitWidth - 6
         from: 0
         to: 1
@@ -66,9 +63,12 @@ Rectangle {
         visible: !root.showPercentage
         text: {
             let time;
-            if (UPower.displayDevice.timeToEmpty > 0) time = UPower.displayDevice.timeToEmpty;
-            if (UPower.displayDevice.timeToFull > .1) time = UPower.displayDevice.timeToFull;
-            if (!time) return "Full"
+            if (UPower.displayDevice.timeToEmpty > 0)
+                time = UPower.displayDevice.timeToEmpty;
+            if (UPower.displayDevice.timeToFull > .1)
+                time = UPower.displayDevice.timeToFull;
+            if (!time)
+                return "Full";
             const mins = time / 60;
             const displayMins = String(Math.floor(mins % 60)).padStart(2, '0');
             const displayHours = Math.floor(mins / 60);

@@ -4,7 +4,6 @@ import "../service"
 
 Item {
     implicitWidth: text.implicitWidth
-    implicitHeight: text.implicitHeight
     anchors.verticalCenter: parent.verticalCenter
     SystemClock {
         id: clock
@@ -14,6 +13,6 @@ Item {
         id: text
         text: Qt.formatDateTime(clock.date, "yyyy-MM-ddThh:mm")
         color: Config.theme.colors.text
-        font.weight: 800
+        font.bold: true
     }
 }

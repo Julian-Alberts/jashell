@@ -3,20 +3,20 @@ import Quickshell.Services.Pipewire
 import "../service"
 
 Item {
+    id: root
     property PwNode dev
-    anchors.verticalCenter: parent.verticalCenter
-    implicitWidth: contentLoader.implicitWidth
-    implicitHeight: contentLoader.implicitHeight
+    width: contentLoader.implicitWidth
     Loader {
         id: contentLoader
         sourceComponent: contentComponent
-        active: dev !== null
+        active: root.dev !== null
+        height: parent.height
     }
     Component {
         id: contentComponent
         Item {
             implicitWidth: row.implicitWidth
-            implicitHeight: row.implicitHeight
+            height: parent.height
             anchors.verticalCenter: parent.verticalCenter
             Row {
                 id: row

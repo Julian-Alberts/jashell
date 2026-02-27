@@ -5,7 +5,6 @@ import "../Components/SystemTray/" as SystemTrayComponents
 
 ListView {
     id: root
-    height: contentItem.childrenRect.height
     width: contentItem.childrenRect.width
     model: SystemTray.items.values
     spacing: 10
