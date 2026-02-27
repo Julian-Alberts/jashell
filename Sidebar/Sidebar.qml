@@ -1,15 +1,25 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
-import "../service"
-import "../Config/"
+import "../service" as Service
+import "../Config" as Config
+import "../popup" as Popup
 
 Item {
     id: root
     property ShellScreen screen
     anchors.fill: parent
     implicitWidth: 50
-    implicitHeight: 200
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: ev => {
+            Popup.Settings.visible = true;
+            Popup.Settings.anchor.item = root;
+            Popup.Settings.anchor.rect.y = ev.y - Popup.Settings.height / 2;
+            Popup.Settings.anchor.edges = Edges.Right;
+        }
+    }
     Loader {
         anchors {
             left: parent.left
@@ -27,7 +37,7 @@ Item {
                 }
             }
         }
-        active: Settings.layout.sidebar.showMediaControls
+        active: Config.Settings.layout.sidebar.showMediaControls
     }
     Column {
         anchors {
@@ -44,7 +54,7 @@ Item {
             sourceComponent: TaskList {
                 screen: root.screen
             }
-            active: Settings.layout.sidebar.showWorkspaces
+            active: Service.Config.Settings.layout.sidebar.showWorkspaces
         }
         Loader {
             anchors {
@@ -52,7 +62,7 @@ Item {
                 right: parent.right
             }
             sourceComponent: SystemTray {}
-            active: Settings.layout.sidebar.showSystemTray
+            active: Config.Settings.layout.sidebar.showSystemTray
         }
     }
 }
