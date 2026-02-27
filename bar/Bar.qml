@@ -26,5 +26,6 @@ Item {
         Media {}
         Battery {}
         Clock {}
+        SystemTray {}
     }
 }

@@ -6,6 +6,7 @@ import "../../popup"
 Image {
     id: icon
     property SystemTrayItem handle
+    property var popupEdges: Edges.Top
     source: modelData.icon
     sourceSize.width: 20
     sourceSize.height: 20
@@ -27,7 +28,7 @@ Image {
                 SystemTrayMenu.menu = modelData.menu;
                 SystemTrayMenu.anchor.item = icon;
                 SystemTrayMenu.visible = true;
-                SystemTrayMenu.edges = Edges.Right;
+                SystemTrayMenu.edges = icon.popupEdges;
                 break;
             case Qt.MiddleButton:
                 modelData.secondaryActivate();
