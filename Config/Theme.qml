@@ -5,6 +5,7 @@ import Quickshell.Io
 import Quickshell
 
 Singleton {
+    id: root
     property var colors: adapter.colors
     property var fonts: adapter.fonts
     property var icons: adapter.icons
@@ -42,28 +43,29 @@ Singleton {
                 property string volumeOff: "\uf026"
             }
         }
+        onLoaded: {
+            console.log("Theme loaded");
+            const palette = Qt.createQmlObject("import QtQuick; Palette {}", root, "palette");
+            //palette.accent = ''
+            //palette.alternateBase = ''
+            palette.base = adapter.colors.background;
+            palette.button = adapter.colors.background;
+            palette.buttonText = adapter.colors.text;
+            //palette.colorGroup = ''
+            //palette.dark = ''
+            //palette.highlight = ''
+            //palette.highlightedText = ''
+            //palette.light = ''
+            //palette.mid = ''
+            //palette.midlight = ''
+            //palette.placeholderText = ''
+            //palette.shadow = ''
+            palette.text = adapter.colors.text;
+            palette.window = adapter.colors.background;
+            palette.windowText = adapter.colors.text;
+            root.palette = palette;
+        }
+        property Palette tmp: Palette {}
     }
-    property Palette palette: Palette {
-        accent: "red"
-        alternateBase: adapter.colors.background
-        base: adapter.colors.background
-        brightText: "red"
-        button: adapter.colors.background
-        buttonText: apapter.colors.text
-        dark: "red"
-        highlight: "red"
-        highlightedText: "red"
-        light: "red"
-        link: "red"
-        linkVisited: "red"
-        mid: "red"
-        midlight: "red"
-        placeholderText: "red"
-        shadow: "red"
-        text: adapter.colors.text
-        toolTipBase: "red"
-        toolTipText: "red"
-        window: adapter.colors.background
-        windowText: adapter.colors.text
-    }
+    property Palette palette
 }
