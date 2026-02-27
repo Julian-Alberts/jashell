@@ -1,45 +1,37 @@
 pragma Singleton
 import QtQuick
 import Quickshell.Io
+import Quickshell
+import "../Config/"
 
-FileView {
+Singleton {
     id: config
-    property color background: adapter.theme.colors.background
-    property color textColor: adapter.theme.colors.text
-    property color red: adapter.theme.colors.red
-    property color yellow: adapter.theme.colors.yellow
-    property color green: adapter.theme.colors.green
-    property color icon: adapter.theme.colors.icon
+    property color background: Theme.colors.background
+    property color textColor: Theme.colors.text
+    property color red: Theme.colors.red
+    property color yellow: Theme.colors.yellow
+    property color green: Theme.colors.green
+    property color icon: Theme.colors.icon
     property JsonObject theme: adapter.theme
-    path: Qt.resolvedUrl("../config.json")
-    watchChanges: true
-    onFileChanged: reload()
-    JsonAdapter {
+    QtObject {
         id: adapter
         property JsonObject theme: JsonObject {
-            property JsonObject colors: JsonObject {
-                property string background: "#1a1b26"
-                property string text: "#a9b1d6"
-                property string red: "#f7768e"
-                property string yellow: "#e0af68"
-                property string green: "#73daca"
-                property string icon: "#565f89"
-            }
+            property JsonObject colors: Theme.colors
             property JsonObject icons: JsonObject {
-                property string fontFamily: "Font Awesome 7 Free Solid"
-                property string media_play: "\uf04b"
-                property string media_pause: "\uf04c"
-                property string media_next: "\uf051"
-                property string media_previous: "\uf048"
-                property string mediaRepeat: "\uf363"
-                property string mediaShuffle: "\uf074"
-                property string microphone: "\uf130"
-                property string microphoneMuted: "\uf131"
-                property string volumeMuted: "\uf6a9"
-                property string volumeLow: "\uf027"
-                property string volumeMedium: "\uf6a8"
-                property string volumeHigh: "\uf028"
-                property string volumeOff: "\uf026"
+                property string fontFamily: Theme.fonts.icons
+                property string media_play: Theme.icons.mediaPlay
+                property string media_pause: Theme.icons.mediaPause
+                property string media_next: Theme.icons.mediaNext
+                property string media_previous: Theme.icons.mediaPrevious
+                property string mediaRepeat: Theme.icons.mediaRepeat
+                property string mediaShuffle: Theme.icons.mediaShuffle
+                property string microphone: Theme.icons.microphone
+                property string microphoneMuted: Theme.icons.microphoneMuted
+                property string volumeMuted: Theme.icons.volumeMuted
+                property string volumeLow: Theme.icons.volumeLow
+                property string volumeMedium: Theme.icons.volumeMedium
+                property string volumeHigh: Theme.icons.volumeHigh
+                property string volumeOff: Theme.icons.volumeOff
             }
         }
     }
