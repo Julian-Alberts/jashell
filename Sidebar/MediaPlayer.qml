@@ -46,7 +46,8 @@ Item {
                 left: parent.left
                 right: parent.right
             }
-            visible: hoverHandler.hovered
+            height: hoverHandler.hovered ? childrenRect.height : 0
+            clip: true
             Repeater {
                 id: controlsRepeater
                 model: [
@@ -81,6 +82,11 @@ Item {
                         onClicked: modelData.onClicked()
                         cursorShape: Qt.PointingHandCursor
                     }
+                }
+            }
+            Behavior on height {
+                NumberAnimation {
+                    duration: 200
                 }
             }
         }

@@ -8,8 +8,8 @@ Singleton {
     property var fonts: adapter.fonts
     property var icons: adapter.icons
     FileView {
-        path: Qt.resolvedUrl("../theme.json")
-        watchChanges: true
+        path: Qt.resolvedUrl("../themes/" + Settings.theme + ".json")
+        watchChanges: Settings.hotReload
         onFileChanged: reload()
         blockLoading: true
         JsonAdapter {

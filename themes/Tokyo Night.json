@@ -1,0 +1,28 @@
+{
+    "colors":  {
+        "background": "#1a1b26",
+        "text": "#a9b1d6",
+        "red": "#f7768e",
+        "yellow": "#e0af68",
+        "green": "#73daca",
+        "icon": "#565f89"
+    },
+    "fonts":  {
+        "icons": "Font Awesome 7 Free Solid"
+    },
+    "icons":  {
+        "mediaPlay": "\uf04b",
+        "mediaPause": "\uf04c",
+        "mediaNext": "\uf051",
+        "mediaPrevious": "\uf048",
+        "mediaRepeat": "\uf363",
+        "mediaShuffle": "\uf074",
+        "microphone": "\uf130",
+        "microphoneMuted": "\uf131",
+        "volumeMuted": "\uf6a9",
+        "volumeLow": "\uf027",
+        "volumeMedium": "\uf6a8",
+        "volumeHigh": "\uf028",
+        "volumeOff": "\uf026"
+    }
+}

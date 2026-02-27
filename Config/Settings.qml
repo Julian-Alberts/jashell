@@ -5,6 +5,8 @@ import Quickshell
 
 Singleton {
     property var layout: adapter.layout
+    property string theme: adapter.theme
+    property bool themeHotReload: adapter.themeHotReload
     FileView {
         path: Qt.resolvedUrl("../settings.json")
         watchChanges: true
@@ -13,6 +15,8 @@ Singleton {
         JsonAdapter {
             id: adapter
             property Layout layout: Layout {}
+            property string theme: "Tokyo Night"
+            property bool hotReload: false
         }
     }
     component Layout: JsonObject {
