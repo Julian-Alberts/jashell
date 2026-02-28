@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.Mpris
 import Quickshell
-import "../service"
-import "../popup"
+import "../../service"
+import "../../popup"
 
 Item {
     id: root

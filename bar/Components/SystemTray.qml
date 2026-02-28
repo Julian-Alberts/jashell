@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Services.SystemTray
 import Quickshell
-import "../Components/SystemTray/" as SystemTrayComponents
+import "../../Components/SystemTray/" as SystemTrayComponents
 
 ListView {
     id: root

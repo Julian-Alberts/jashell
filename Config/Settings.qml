@@ -27,19 +27,34 @@ Singleton {
             }
         }
     }
+    function getLayout(screen: ShellScreen): Layout {
+        return layout;
+    }
     component Layout: JsonObject {
-        property JsonObject topbar: JsonObject {
-            property bool showWorkspaces: true
-            property bool showMediaControls: true
-            property bool showSystemTray: true
-            property bool showClock: true
-            property bool showAudioControls: false
-            property bool showBattery: true
-        }
-        property JsonObject sidebar: JsonObject {
-            property bool showWorkspaces: true
-            property bool showMediaControls: true
-            property bool showSystemTray: true
-        }
+        property TopBar topbar: TopBar {}
+        property SideBar sidebar: SideBar {}
+    }
+    component TopBar: JsonObject {
+        property bool showWorkspaces: true
+        property bool showMediaControls: true
+        property bool showSystemTray: true
+        property bool showClock: true
+        property bool showAudioControls: false
+        property bool showBattery: true
+        property TopBarComponents components: TopBarComponents {}
+    }
+    component TopBarComponents: JsonObject {
+        property list<string> left: ["Workspaces"]
+        property list<string> right: ["MediaPlayer", "AudioDevices", "Battery", "Clock", "SystemTray"]
+    }
+    component SideBar: JsonObject {
+        property bool showWorkspaces: true
+        property bool showMediaControls: true
+        property bool showSystemTray: true
+        property SideBarComponents components: SideBarComponents {}
+    }
+    component SideBarComponents: JsonObject {
+        property list<string> top: ["MediaPlayer"]
+        property list<string> bottom: ["Workspaces", "SystemTray"]
     }
 }

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
 import Quickshell
-import "../service/"
+import "../../service/"
 
 Rectangle {
     id: root
@@ -77,7 +77,6 @@ Rectangle {
         }
         font.bold: true
     }
-    visible: UPower.displayDevice?.isLaptopBattery ?? false
     MouseArea {
         anchors.fill: parent
         onClicked: {

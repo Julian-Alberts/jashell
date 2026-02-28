@@ -1,6 +1,7 @@
 //@ pragma UseQApplication
 import Quickshell.Bluetooth
 import Quickshell
+import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Controls
 import "./bar"
@@ -24,7 +25,7 @@ ShellRoot {
             Bar {
                 palette: Theme.palette
                 screen: topBar.modelData
-                implicitHeight: topBar.implicitHeight
+                height: parent.height
             }
         }
     }
@@ -46,5 +47,8 @@ ShellRoot {
                 screen: sideBar.modelData
             }
         }
+    }
+    PwObjectTracker {
+        objects: [Pipewire.defaultAudioSink, Pipewire.defaultAudioSource]
     }
 }

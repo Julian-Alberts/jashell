@@ -1,64 +1,61 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Services.UPower
 import "../Config/"
+import "./Components"
 
 Pane {
     id: root
     property ShellScreen screen
+    property Settings.Layout layout: Settings.getLayout(screen)
     anchors.fill: parent
-    Loader {
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        sourceComponent: workspaceDelegate
-        active: Settings.layout.topbar.showWorkspaces
+    Row {
+        anchors {
+            left: parent.left
+            verticalCenter: parent.verticalCenter
+        }
+        height: root.height - 10
+        spacing: 20
+        Repeater {
+            model: root.layout.topbar.components.left
+            Loader {
+                id: leftLoader
+                required property string modelData
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+                source: Quickshell.shellDir + "/bar/Components/" + modelData + ".qml"
+                onLoaded: {
+                    if (leftLoader.modelData === "Workspaces") {
+                        item.settings.screen = root.screen;
+                    }
+                }
+            }
+        }
     }
     Row {
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        height: 20
+        anchors {
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+        height: root.height - 10
         spacing: 20
-        Media {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            height: parent.height
-        }
-        Loader {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            sourceComponent: Battery {}
-            active: Settings.layout.topbar.showBattery && UPower.displayDevice.isLaptopBattery
-            visible: active
-        }
-        Loader {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            sourceComponent: Clock {}
-            active: Settings.layout.topbar.showClock
-        }
-        Loader {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            sourceComponent: SystemTray {}
-            active: Settings.layout.topbar.showSystemTray
-        }
-    }
-    Component {
-        id: workspaceDelegate
-        Row {
-            spacing: 10
-            Workspaces {
-                output: screen.name
-                displayName: screen.name
+        Repeater {
+            model: root.layout.topbar.components.right
+            Loader {
+                id: rightLoader
+                required property string modelData
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+                source: Quickshell.shellDir + "/bar/Components/" + modelData + ".qml"
+                onLoaded: {
+                    if (leftLoader.modelData === "Workspaces") {
+                        item.settings.screen = root.screen;
+                    }
+                }
             }
         }
     }

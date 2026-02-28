@@ -4,10 +4,12 @@ import Quickshell.Services.Mpris
 import "../service" as Service
 import "../Config" as Config
 import "../popup" as Popup
+import "./Components"
 
 Item {
     id: root
     property ShellScreen screen
+    property Config.Settings.SideBar settings: Config.Settings.getLayout(screen).sidebar
     anchors.fill: parent
     implicitWidth: 50
     MouseArea {
@@ -20,24 +22,24 @@ Item {
             Popup.Settings.anchor.edges = Edges.Right;
         }
     }
-    Loader {
+    Column {
         anchors {
+            top: parent.top
             left: parent.left
             right: parent.right
-            top: parent.top
         }
-        sourceComponent: Column {
-            spacing: 10
-            Repeater {
-                /* Youtube does not remove the player but sets artist and title to null */
-                model: Mpris.players.values.filter(player => player.trackArtist || player.trackTitle)
-                delegate: MediaPlayer {
-                    width: parent.width
-                    player: modelData
+        spacing: 10
+        Repeater {
+            model: root.settings.components.top
+            Loader {
+                required property string modelData
+                anchors {
+                    left: parent.left
+                    right: parent.right
                 }
+                source: Quickshell.shellDir + "/Sidebar/Components/" + modelData + ".qml"
             }
         }
-        active: Config.Settings.layout.sidebar.showMediaControls
     }
     Column {
         anchors {
@@ -46,23 +48,24 @@ Item {
             bottom: parent.bottom
         }
         spacing: 10
-        Loader {
-            anchors {
-                left: parent.left
-                right: parent.right
+        Repeater {
+            model: root.settings.components.bottom
+            Loader {
+                id: bottomLoader
+                required property string modelData
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                source: Quickshell.shellDir + "/Sidebar/Components/" + modelData + ".qml"
+                Binding {
+                    target: bottomLoader.item
+                    property: "screen"
+                    value: root.screen
+                    when: bottomLoader.item && bottomLoader.item.hasOwnProperty("screen")
+                }
+                active: Config.Settings.layout.sidebar.showWorkspaces
             }
-            sourceComponent: TaskList {
-                screen: root.screen
-            }
-            active: Service.Config.Settings.layout.sidebar.showWorkspaces
-        }
-        Loader {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            sourceComponent: SystemTray {}
-            active: Config.Settings.layout.sidebar.showSystemTray
         }
     }
 }

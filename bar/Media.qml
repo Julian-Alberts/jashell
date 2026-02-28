@@ -3,6 +3,7 @@ import Quickshell.Services.Pipewire
 import Quickshell.Services.Mpris
 import "../service"
 import "../Config/"
+import "./Components"
 
 Item {
     id: root
@@ -21,19 +22,11 @@ Item {
             sourceComponent: MediaPlayer {}
             active: Settings.layout.topbar.showMediaControls
         }
-        MediaDevice {
+        AudioDevices {
             anchors {
                 top: parent.top
                 bottom: parent.bottom
             }
-            dev: root.sink
-        }
-        MediaDevice {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            dev: root.source
         }
     }
     PwObjectTracker {

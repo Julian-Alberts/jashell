@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
-import "../service"
-import "./TaskList/"
+import "../../service"
 
 Item {
     id: root
