@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "../../service"
+import "../../Config"
 
 ListView {
     anchors {
@@ -9,9 +10,10 @@ ListView {
     }
     height: contentHeight
     delegate: Rectangle {
+        id: workspaceRect
         color: Config.background
         border {
-            color: model.isActive || hoverHandler.hovered ? Config.theme.colors.text : Config.theme.colors.icon
+            color: model.isActive || hoverHandler.hovered ? Config.theme.colors.border.active : Config.theme.colors.border.inactive
             width: 2
         }
         width: 50
@@ -33,7 +35,7 @@ ListView {
             }
 
             Text {
-                text: model.name || model.index
+                text: (model.name || model.index)
                 color: Config.textColor
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
@@ -44,7 +46,7 @@ ListView {
             Rectangle {
                 width: parent.width
                 height: 2
-                color: Config.theme.colors.text
+                color: workspaceRect.border.color
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: model.isActive && windowList.count > 0
             }

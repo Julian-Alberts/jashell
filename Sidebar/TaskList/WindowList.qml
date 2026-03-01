@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "../../service"
+import "../../Config"
 
 ListView {
     id: root
@@ -12,18 +13,20 @@ ListView {
     delegate: Item {
         width: 50
         height: 50
+        property bool highlight: hoverHandler.hovered || model.isFocused
         Rectangle {
             width: 50
             height: width
-            color: "#565f89"
+            color: Theme.colors.accent
             border {
-                color: Config.textColor
+                color: Theme.colors.border.active
                 width: 2
             }
             radius: 5
             visible: model.isFocused || hoverHandler.hovered
         }
         Image {
+            id: windowIcon
             source: model.iconPath ? "file://" + model.iconPath : ""
             sourceSize.width: root.width - 10
             sourceSize.height: root.width - 10
@@ -31,11 +34,12 @@ ListView {
             visible: !!model.iconPath
             anchors.centerIn: parent
         }
+        // Image fallback
         Rectangle {
             width: parent.width - 10
             height: parent.height - 10
-            color: Config.theme.colors.icon
-            visible: !model.iconPath
+            color: Theme.colors.icon
+            visible: !windowIcon.visible
             anchors.centerIn: parent
             radius: 5
             Text {
@@ -43,8 +47,8 @@ ListView {
                 height: parent.height - 10
                 clip: true
                 anchors.centerIn: parent
-                text: model.appId
-                color: Config.textColor
+                text: model.appId + index
+                color: Theme.colors.text
                 font.pixelSize: 12
                 wrapMode: Text.Wrap
             }
