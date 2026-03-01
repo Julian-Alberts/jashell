@@ -4,6 +4,7 @@ import Quickshell.Services.Mpris
 import QtQuick
 import QtQuick.Controls
 import "../service"
+import "../Config"
 import "../bar"
 
 JaPopupWindow {
@@ -243,7 +244,7 @@ JaPopupWindow {
                                 width: parent.parent.visualPosition * parent.parent.width
                                 height: parent.height
                                 radius: 2
-                                color: Config.textColor
+                                color: Theme.colors.accent
                             }
                         }
                     }

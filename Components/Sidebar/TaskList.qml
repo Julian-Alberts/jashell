@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "../../service"
+import "../../Config"
 
 Item {
     id: root
@@ -17,6 +18,15 @@ Item {
                 value: root.screen.name
             }
         ]
+    }
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            color: Theme.colors.icon
+            width: 2
+        }
+        radius: 5
     }
     WorkspaceList {
         id: content
