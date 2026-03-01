@@ -4,21 +4,28 @@ import "../../service"
 import "../../Config"
 
 ListView {
+    id: root
     anchors {
         left: parent.left
         right: parent.right
     }
+    spacing: -2
     height: contentHeight
     delegate: Rectangle {
         id: workspaceRect
+        property bool isHighlighted: model.isActive || hoverHandler.hovered
         color: Config.background
         border {
-            color: model.isActive || hoverHandler.hovered ? Config.theme.colors.border.active : Config.theme.colors.border.inactive
+            color: isHighlighted ? Config.theme.colors.border.active : Config.theme.colors.border.inactive
             width: 2
         }
+        topLeftRadius: index === 1 ? 5 : 0
+        topRightRadius: topLeftRadius
+        bottomLeftRadius: index === root.count ? 5 : 0
+        bottomRightRadius: bottomLeftRadius
+        z: isHighlighted ? 1 : 0
         width: 50
         height: workspaceItem.height
-        radius: 5
         Column {
             id: workspaceItem
             property bool showWindows: model.isActive
@@ -52,9 +59,8 @@ ListView {
             }
             WindowList {
                 id: windowList
-                model: filteredWindows
-                clip: true
-                height: workspaceItem.showWindows ? contentHeight : 0
+                workspaces: filteredWindows
+                height: workspaceItem.showWindows ? implicitHeight : 0
                 Behavior on height {
                     NumberAnimation {
                         duration: 200
