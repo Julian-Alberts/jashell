@@ -52,7 +52,7 @@ Pane {
                 }
                 source: Quickshell.shellDir + "/bar/Components/" + modelData + ".qml"
                 onLoaded: {
-                    if (leftLoader.modelData === "Workspaces") {
+                    if (rightLoader.modelData === "Workspaces") {
                         item.settings.screen = root.screen;
                     }
                 }
