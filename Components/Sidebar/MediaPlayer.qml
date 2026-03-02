@@ -61,7 +61,7 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
-            height: hoverHandler.hovered ? childrenRect.height : 0
+            height: hoverHandler.hovered ? implicitHeight : 0
             clip: true
             Repeater {
                 id: controlsRepeater
