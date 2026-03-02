@@ -4,15 +4,25 @@ import Quickshell.Services.Mpris
 import Quickshell
 import "../../service"
 import "../../popup"
+import "../../Config"
+import "../Ui" as Ui
 
-Item {
+Rectangle {
     id: root
     property MprisPlayer player
-    implicitHeight: content.implicitHeight
+    implicitHeight: content.height
+    color: "transparent"
+    border {
+        color: player.isPlaying ? Theme.colors.accent : Theme.colors.icon
+        width: 2
+    }
+    radius: 5
     Column {
         id: content
-        spacing: 10
-        width: parent.width
+        width: parent.width - root.border.width * 2
+        height: content.implicitHeight + root.border.width * 2
+        x: root.border.width
+        y: root.border.width
         Image {
             id: trackArt
             width: parent.width
@@ -24,11 +34,16 @@ Item {
                 from: 0
                 to: root.player.length
                 value: root.player.position
-                anchors.fill: parent
+                implicitHeight: 4
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
                 background: Item {}
                 contentItem: Rectangle {
-                    color: "#C0565f89"
-                    width: progressBar.visualPosition * parent.width
+                    color: root.border.color
+                    width: parent.visualPosition * parent.width
                     height: parent.height
                 }
             }
@@ -72,16 +87,12 @@ Item {
                         onClicked: root.player.goNext
                     }
                 ].filter(button => button.enabled)
-                delegate: Text {
+                delegate: Ui.Button {
+                    height: controlsContainer.width
                     text: modelData.icon
-                    color: Config.theme.colors.text
                     font.pixelSize: 24
                     anchors.horizontalCenter: parent.horizontalCenter
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: modelData.onClicked()
-                        cursorShape: Qt.PointingHandCursor
-                    }
+                    onClicked: modelData.onClicked()
                 }
             }
             Behavior on height {
