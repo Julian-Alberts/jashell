@@ -6,7 +6,7 @@ import QtQuick
 import QtQuick.Controls
 import "./bar"
 import "./Sidebar/"
-import "./service/"
+import "./service/" as Service
 import "./Config/"
 
 ShellRoot {
@@ -45,6 +45,9 @@ ShellRoot {
             Sidebar {
                 anchors.fill: parent
                 screen: sideBar.modelData
+            }
+            Component.onCompleted: {
+                console.log(Service.Cpu.cpuData);
             }
         }
     }
