@@ -32,12 +32,45 @@ Item {
         Repeater {
             model: root.settings.components.top
             Loader {
+                id: topLoader
                 required property string modelData
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
                 source: Quickshell.shellDir + "/Sidebar/Components/" + modelData + ".qml"
+                Binding {
+                    target: topLoader.item
+                    property: "screen"
+                    value: root.screen
+                    when: topLoader.item && topLoader.item.hasOwnProperty("screen")
+                }
+            }
+        }
+    }
+    Column {
+        anchors {
+            left: parent.left
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+        spacing: 10
+        Repeater {
+            model: root.settings.components.center
+            Loader {
+                id: centerLoader
+                required property string modelData
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                source: Quickshell.shellDir + "/Sidebar/Components/" + modelData + ".qml"
+                Binding {
+                    target: centerLoader.item
+                    property: "screen"
+                    value: root.screen
+                    when: centerLoader.item && centerLoader.item.hasOwnProperty("screen")
+                }
             }
         }
     }
@@ -64,7 +97,6 @@ Item {
                     value: root.screen
                     when: bottomLoader.item && bottomLoader.item.hasOwnProperty("screen")
                 }
-                active: Config.Settings.layout.sidebar.showWorkspaces
             }
         }
     }

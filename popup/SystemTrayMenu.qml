@@ -18,9 +18,6 @@ JaPopupWindow {
         y: 4
         active: root.menu !== undefined
         sourceComponent: menuComponent
-        Component.onCompleted: {
-            console.log("Size: " + menuLoader.width + "x" + menuLoader.height);
-        }
     }
     Component {
         id: menuComponent
