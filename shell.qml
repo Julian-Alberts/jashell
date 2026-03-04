@@ -23,9 +23,6 @@ ShellRoot {
                 left: true
                 right: true
             }
-            Component.onCompleted: {
-                console.log("Top Pos", settings.position);
-            }
             implicitHeight: 30
             Bar {
                 palette: Theme.palette
@@ -46,9 +43,6 @@ ShellRoot {
                 left: settings.position === "left"
                 right: settings.position === "right"
                 bottom: true
-            }
-            Component.onCompleted: {
-                console.log("Pos", settings.position);
             }
             implicitWidth: 50
             color: Config.theme.colors.background

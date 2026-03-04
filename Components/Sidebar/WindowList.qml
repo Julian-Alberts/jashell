@@ -65,10 +65,7 @@ Item {
             }
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    console.log("Focusing window with id:", model.id);
-                    Niri.focusWindow(model.id);
-                }
+                onClicked: Niri.focusWindow(model.id)
                 cursorShape: Qt.PointingHandCursor
             }
             HoverHandler {

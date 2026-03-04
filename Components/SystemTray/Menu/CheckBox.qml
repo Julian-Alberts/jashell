@@ -39,7 +39,6 @@ Menu.Base {
         onClicked: {
             checkBox.checked = !checkBox.checked;
             root.handle.triggered();
-            console.log("Clicked checkbox " + checkBox.checked);
         }
         cursorShape: Qt.PointingHandCursor
         enabled: root.handle.enabled

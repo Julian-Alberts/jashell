@@ -34,9 +34,6 @@ JaPopupWindow {
             id: fetchThemesProcess
             command: ["ls"]
             running: true
-            onStarted: {
-                console.log("Process started");
-            }
             workingDirectory: Quickshell.shellDir + "/themes"
             stdout: StdioCollector {
                 onStreamFinished: {

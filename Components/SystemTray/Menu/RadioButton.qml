@@ -18,10 +18,7 @@ Menu.Base {
     }
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            root.handle.triggered();
-            console.log("Clicked checkbox " + root.handle.text);
-        }
+        onClicked: root.handle.triggered()
         cursorShape: Qt.PointingHandCursor
     }
 }
