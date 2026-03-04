@@ -54,7 +54,7 @@ Singleton {
     }
     function getLayout(screen: ShellScreen): Layout {
         const override = root.layoutOverrides[screen.name];
-        const selectedLayout = override ? override : layout
+        const selectedLayout = override ? override : layout;
         return selectedLayout;
     }
     Component {
@@ -82,6 +82,7 @@ Singleton {
         sidebar: SideBar {
             components: SideBarComponents {
                 top: layout.override?.sidebar?.components?.top ? layout.override.sidebar.components.top : layout.fallback.sidebar.components.top
+                center: layout.override?.sidebar?.components?.center ? layout.override.sidebar.components.center : layout.fallback.sidebar.components.center
                 bottom: layout.override?.sidebar?.components?.bottom ? layout.override.sidebar.components.bottom : layout.fallback.sidebar.components.bottom
             }
         }
@@ -94,13 +95,11 @@ Singleton {
         property list<string> right: ["MediaPlayer", "AudioDevices", "Battery", "Clock", "SystemTray"]
     }
     component SideBar: JsonObject {
-        property bool showWorkspaces: true
-        property bool showMediaControls: true
-        property bool showSystemTray: true
         property SideBarComponents components: SideBarComponents {}
     }
     component SideBarComponents: JsonObject {
         property list<string> top: ["MediaPlayer"]
+        property list<string> center: []
         property list<string> bottom: ["Workspaces", "SystemTray"]
     }
 }
