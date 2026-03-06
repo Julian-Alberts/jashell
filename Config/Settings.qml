@@ -10,6 +10,7 @@ Singleton {
     property var layoutOverrides: ({})
     property string theme: adapter.theme
     property bool hotReload: adapter.hotReload
+    property Clock clock: adapter.clock
     property var data: adapter
     FileView {
         path: Qt.resolvedUrl("../settings.json")
@@ -28,6 +29,7 @@ Singleton {
             property string theme: "Tokyo Night"
             property bool hotReload: false
             property var layoutOverrides: []
+            property Clock clock: Clock {}
         }
     }
     function updateLayoutOverrides(overrides: var, fallback: Layout) {
@@ -130,5 +132,8 @@ Singleton {
         property list<string> top: ["MediaPlayer"]
         property list<string> center: []
         property list<string> bottom: ["Workspaces", "SystemTray"]
+    }
+    component Clock: JsonObject {
+        property string format: "yyyy-MM-dd hh:mm"
     }
 }
