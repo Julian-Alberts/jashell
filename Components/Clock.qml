@@ -6,8 +6,12 @@ import "../Components/Ui"
 
 Item {
     id: root
-    property bool multiLine: true
+    property bool isVertical: true
     property string separator: " "
+    property string format: Settings.clock.format
+    Component.onCompleted: {
+        console.log(root.format, root.isVertical)
+    }
     implicitHeight: layout.implicitHeight
     implicitWidth: layout.implicitWidth
     SystemClock {
@@ -16,18 +20,18 @@ Item {
     }
     GridLayout {
         id: layout
-        columns: root.multiLine ? 1 : -1
-        rows: root.multiLine ? -1 : 1
+        columns: root.isVertical ? 1 : -1
+        rows: root.isVertical ? -1 : 1
         anchors {
             horizontalCenter: parent.horizontalCenter
         }
         Repeater {
             model: ScriptModel {
-                values: Qt.formatDateTime(clock.date, Settings.clock.format).split(root.separator)
+                values: Qt.formatDateTime(clock.date, root.format).split(root.separator)
             }
             delegate: Label {
                 required property string modelData
-                Layout.alignment: root.multiLine ? Qt.AlignHCenter : Qt.AlignLeft
+                Layout.alignment: root.isVertical ? Qt.AlignHCenter : Qt.AlignLeft
                 text: modelData
                 color: Theme.colors.text
                 font.bold: true

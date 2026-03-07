@@ -135,6 +135,7 @@ Singleton {
     }
     component Clock: JsonObject {
         property string format: "yyyy-MM-dd hh:mm"
+        property string verticalFormat: "yy-MM-dd hh:mm"
         property string separator: " "
     }
 }

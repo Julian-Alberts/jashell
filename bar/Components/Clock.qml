@@ -5,5 +5,5 @@ import "../../Config"
 import "../../Components"
 
 Clock {
-    multiLine: false
+    isVertical: false
 }
