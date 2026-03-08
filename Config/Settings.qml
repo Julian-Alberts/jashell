@@ -10,6 +10,7 @@ Singleton {
     property var layoutOverrides: ({})
     property string theme: adapter.theme
     property bool hotReload: adapter.hotReload
+    property RotateScreen rotateScreen: adapter.rotateScreen
     property var data: adapter
     FileView {
         path: Qt.resolvedUrl("../settings.json")
@@ -28,6 +29,7 @@ Singleton {
             property string theme: "Tokyo Night"
             property bool hotReload: false
             property var layoutOverrides: []
+            property RotateScreen rotateScreen: RotateScreen {}
         }
     }
     function updateLayoutOverrides(overrides: var, fallback: Layout) {
@@ -130,5 +132,9 @@ Singleton {
         property list<string> top: ["MediaPlayer"]
         property list<string> center: []
         property list<string> bottom: ["Workspaces", "SystemTray"]
+    }
+
+    component RotateScreen: JsonObject {
+        property list<string> rotations: ["normal", "90"]
     }
 }

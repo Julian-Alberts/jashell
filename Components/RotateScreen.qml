@@ -5,7 +5,7 @@ import "../Config"
 
 Item {
     id: root
-    property list<string> states: ["normal", "90"]
+    property list<string> states: Settings.rotateScreen.rotations
     required property string outputName
     property int currentStateIndex: 0
     property int nextStateIndex: (currentStateIndex + 1) < states.length ? currentStateIndex + 1 : 0

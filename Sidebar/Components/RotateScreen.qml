@@ -1,7 +1,9 @@
+import Quickshell
 import "../../Components"
 
 RotateScreen {
-    outputName: "eDP-1"
+    outputName: screen.name
+    property ShellScreen screen
     anchors {
         left: parent.left
         right: parent.right
