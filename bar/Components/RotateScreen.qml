@@ -4,9 +4,10 @@ import "../../Components"
 RotateScreen {
     outputName: screen.name
     property ShellScreen screen
+    iconSize: width * .8
     anchors {
-        left: parent.left
-        right: parent.right
+        top: parent.top
+        bottom: parent.bottom
     }
-    height: width
+    width: height
 }

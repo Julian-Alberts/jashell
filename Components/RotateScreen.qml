@@ -9,12 +9,12 @@ Item {
     required property string outputName
     property int currentStateIndex: 0
     property int nextStateIndex: (currentStateIndex + 1) < states.length ? currentStateIndex + 1 : 0
-    height: width
+    property int iconSize: width * 0.5
     Button {
         anchors.centerIn: parent
         font {
             family: Theme.fonts.icons
-            pixelSize: root.width * 0.5
+            pixelSize: root.iconSize
         }
         text: "\uf021"
         onClicked: {
