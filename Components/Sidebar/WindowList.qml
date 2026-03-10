@@ -22,7 +22,7 @@ Item {
         }
         height: contentHeight
         delegate: Item {
-            width: parent.width
+            width: root.width
             height: width
             property bool highlight: model.isFocused
             onHighlightChanged: {

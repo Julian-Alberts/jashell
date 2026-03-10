@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import "../../service"
 import "../../Config"
+import Niri as NiriConnection
 
 ListView {
     id: root
