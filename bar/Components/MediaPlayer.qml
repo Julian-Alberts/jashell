@@ -7,11 +7,12 @@ import "../../Config/"
 import "../../Components"
 import "../../Components/Ui"
 
-Item {
+Loader {
     id: root
     property MprisPlayer player: Mpris.players.values.find(p => p.isPlaying) || Mpris.players.values[0] || null
-    implicitWidth: row.implicitWidth
-    Row {
+    width: childrenRect.width
+    active: !!root.player
+    sourceComponent: Row {
         id: row
         spacing: 5
         anchors.verticalCenter: parent.verticalCenter
@@ -60,14 +61,11 @@ Item {
             onClicked: root.player.next()
             enabled: root.player.canGoNext
         }
-    }
-    Timer {
-        running: player.isPlaying
-        interval: 1000
-        repeat: true
-        onTriggered: {
-            player.positionChanged();
+        Timer {
+            running: root.player?.isPlaying ?? false
+            interval: 1000
+            repeat: true
+            onTriggered: root.player.positionChanged()
         }
     }
-    visible: !!player
 }

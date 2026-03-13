@@ -7,9 +7,6 @@ Loader {
     property ShellScreen screen
     required property string namespace
     source: Quickshell.shellDir + "/" + namespace + "/Components/" + root.name + ".qml"
-    onSourceChanged: {
-        console.log("source", source);
-    }
     Binding {
         target: root.item
         property: "screen"

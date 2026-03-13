@@ -1,17 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import "../../Config"
+import "../../Components"
 
-Item {
-    implicitWidth: text.implicitWidth
-    anchors.verticalCenter: parent.verticalCenter
-    SystemClock {
-        id: clock
-        precision: SystemClock.Minutes
-    }
-    Label {
-        id: text
-        text: Qt.formatDateTime(clock.date, "yyyy-MM-ddThh:mm")
-        font.bold: true
-    }
+Clock {
+    isVertical: false
 }

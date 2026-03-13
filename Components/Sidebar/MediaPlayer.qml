@@ -69,7 +69,7 @@ Rectangle {
                     {
                         icon: Config.theme.icons.media_previous,
                         enabled: root.player.canGoPrevious,
-                        onClicked: root.player.goPrevious
+                        onClicked: root.player.previous
                     },
                     {
                         icon: Config.theme.icons.media_play,
@@ -84,7 +84,7 @@ Rectangle {
                     {
                         icon: Config.theme.icons.media_next,
                         enabled: root.player.canGoNext,
-                        onClicked: root.player.goNext
+                        onClicked: root.player.next
                     }
                 ].filter(button => button.enabled)
                 delegate: Ui.Button {

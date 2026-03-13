@@ -11,6 +11,7 @@ Singleton {
     property string theme: adapter.theme
     property bool hotReload: adapter.hotReload
     property RotateScreen rotateScreen: adapter.rotateScreen
+    property Clock clock: adapter.clock
     property var data: adapter
     FileView {
         path: Qt.resolvedUrl("../settings.json")
@@ -30,6 +31,7 @@ Singleton {
             property bool hotReload: false
             property var layoutOverrides: []
             property RotateScreen rotateScreen: RotateScreen {}
+            property Clock clock: Clock {}
         }
     }
     function updateLayoutOverrides(overrides: var, fallback: Layout) {
@@ -136,5 +138,10 @@ Singleton {
 
     component RotateScreen: JsonObject {
         property list<string> rotations: ["normal", "90"]
+    }
+    component Clock: JsonObject {
+        property string format: "yyyy-MM-dd hh:mm"
+        property string verticalFormat: "yy-MM-dd hh:mm"
+        property string separator: " "
     }
 }
