@@ -31,6 +31,12 @@ Pane {
                         item.settings.screen = root.screen;
                     }
                 }
+                Binding {
+                    target: leftLoader.item
+                    property: "screen"
+                    value: root.screen
+                    when: leftLoader.item && leftLoader.item.hasOwnProperty("screen")
+                }
             }
         }
     }

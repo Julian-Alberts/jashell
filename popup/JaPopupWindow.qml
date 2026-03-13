@@ -3,6 +3,7 @@ import QtQuick
 import "../service"
 
 PopupWindow {
+    id: root
     color: "transparent"
     Rectangle {
         anchors.fill: parent
@@ -16,7 +17,7 @@ PopupWindow {
     HoverHandler {
         id: hoverHandler
         onHoveredChanged: {
-            root.visible = hovered
+            root.visible = hovered;
         }
     }
 }

@@ -9,9 +9,6 @@ Item {
     property bool isVertical: true
     property string separator: " "
     property string format: Settings.clock.format
-    Component.onCompleted: {
-        console.log(root.format, root.isVertical)
-    }
     implicitHeight: layout.implicitHeight
     implicitWidth: layout.implicitWidth
     SystemClock {

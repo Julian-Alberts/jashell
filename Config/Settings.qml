@@ -10,6 +10,7 @@ Singleton {
     property var layoutOverrides: ({})
     property string theme: adapter.theme
     property bool hotReload: adapter.hotReload
+    property RotateScreen rotateScreen: adapter.rotateScreen
     property Clock clock: adapter.clock
     property var data: adapter
     FileView {
@@ -29,6 +30,7 @@ Singleton {
             property string theme: "Tokyo Night"
             property bool hotReload: false
             property var layoutOverrides: []
+            property RotateScreen rotateScreen: RotateScreen {}
             property Clock clock: Clock {}
         }
     }
@@ -132,6 +134,10 @@ Singleton {
         property list<string> top: ["MediaPlayer"]
         property list<string> center: []
         property list<string> bottom: ["Workspaces", "SystemTray"]
+    }
+
+    component RotateScreen: JsonObject {
+        property list<string> rotations: ["normal", "90"]
     }
     component Clock: JsonObject {
         property string format: "yyyy-MM-dd hh:mm"

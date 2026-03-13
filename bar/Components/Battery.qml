@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Quickshell.Services.UPower
 import Quickshell
 import "../../service/"
+import "../../popup"
 
 Rectangle {
     id: root
@@ -79,8 +80,16 @@ Rectangle {
     }
     MouseArea {
         anchors.fill: parent
-        onClicked: {
-            root.showPercentage = !root.showPercentage;
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: ev => {
+            switch (ev.button) {
+            case Qt.RightButton:
+                root.showPercentage = !root.showPercentage;
+                break;
+            case Qt.LeftButton:
+                PowerPopup.visible = true;
+                PowerPopup.anchor.item = root;
+            }
         }
     }
 }

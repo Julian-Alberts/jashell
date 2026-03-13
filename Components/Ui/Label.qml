@@ -1,4 +1,7 @@
 import QtQuick
 import QtQuick.Controls
+import "../../Config"
 
-Label {}
+Label {
+    color: Theme.colors.text
+}
