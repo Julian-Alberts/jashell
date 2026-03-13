@@ -10,8 +10,12 @@ import "../bar"
 JaPopupWindow {
     id: root
     property MprisPlayer player: null
-    function open(player: MprisPlayer, anchor, edges: Edges) {
-        this.anchor.item = anchor;
+    function open(player: MprisPlayer, anchor, edges: Edges, isWindow = false) {
+        if (isWindow) {
+            this.anchor.window = anchor;
+        } else {
+            this.anchor.item = anchor;
+        }
         this.anchor.edges = edges;
         this.player = player;
         visible = true;
@@ -19,12 +23,15 @@ JaPopupWindow {
     function close() {
         visible = false;
     }
-    function toggle(player: MprisPlayer, anchor, edges: Edges) {
-        if (visible && root.player === player && root.anchor.item === anchor) {
+    function toggle(player: MprisPlayer, anchor, edges: Edges, isWindow = false) {
+        if (isOpen(player, anchor)) {
             close();
         } else {
-            open(player, anchor, edges);
+            open(player, anchor, edges, isWindow);
         }
+    }
+    function isOpen(player: MprisPlayer, anchor) {
+        return visible && root.player === player && (root.anchor.item === anchor || root.anchor.window === anchor);
     }
     implicitWidth: 350
     implicitHeight: playerLoader.implicitHeight || 100

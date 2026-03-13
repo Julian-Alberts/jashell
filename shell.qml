@@ -49,6 +49,7 @@ ShellRoot {
             Sidebar {
                 anchors.fill: parent
                 screen: sideBar.modelData
+                window: sideBar
             }
         }
     }

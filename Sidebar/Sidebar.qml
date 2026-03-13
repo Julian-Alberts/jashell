@@ -8,7 +8,8 @@ import "./Components"
 
 Item {
     id: root
-    property ShellScreen screen
+    required property ShellScreen screen
+    required property QsWindow window
     property Config.Settings.SideBar settings: Config.Settings.getLayout(screen).sidebar
     anchors.fill: parent
     implicitWidth: 50
@@ -45,6 +46,12 @@ Item {
                     value: root.screen
                     when: topLoader.item && topLoader.item.hasOwnProperty("screen")
                 }
+                Binding {
+                    target: topLoader.item
+                    property: "window"
+                    value: root.window
+                    when: topLoader.item && topLoader.item.hasOwnProperty("window")
+                }
             }
         }
     }
@@ -71,6 +78,12 @@ Item {
                     value: root.screen
                     when: centerLoader.item && centerLoader.item.hasOwnProperty("screen")
                 }
+                Binding {
+                    target: centerLoader.item
+                    property: "window"
+                    value: root.window
+                    when: centerLoader.item && centerLoader.item.hasOwnProperty("window")
+                }
             }
         }
     }
@@ -96,6 +109,12 @@ Item {
                     property: "screen"
                     value: root.screen
                     when: bottomLoader.item && bottomLoader.item.hasOwnProperty("screen")
+                }
+                Binding {
+                    target: bottomLoader.item
+                    property: "window"
+                    value: root.window
+                    when: bottomLoader.item && bottomLoader.item.hasOwnProperty("window")
                 }
             }
         }
