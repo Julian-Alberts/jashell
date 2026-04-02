@@ -60,15 +60,10 @@ Item {
                 namespace: "Sidebar"
                 name: modelData
                 screen: root.screen
+                window: root.window
                 anchors {
                     left: parent.left
                     right: parent.right
-                }
-                Binding {
-                    target: loader.item
-                    property: "window"
-                    value: root.window
-                    when: loader.item && loader.item.hasOwnProperty("window")
                 }
             }
         }

@@ -51,11 +51,11 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: ev => {
-                    MediaPlayerPopup.toggle(root.player, root.window, Edges.None, true);
+                    MediaPlayerPopup.toggle(root.player, root.window, Edges.Right | Edges.Bottom, true);
                     const global = mapToGlobal(trackArt.x * 2 + trackArt.width, ev.y);
                     // Center the popup vertically on the click position and align it to the right of the track art
                     MediaPlayerPopup.anchor.rect.y = global.y - MediaPlayerPopup.height / 2;
-                    MediaPlayerPopup.anchor.rect.x = global.x;
+                    MediaPlayerPopup.anchor.rect.x = root.window.width;
                 }
                 cursorShape: Qt.PointingHandCursor
             }
