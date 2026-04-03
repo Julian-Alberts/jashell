@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import "../Config/"
-import "./Components"
+import "../../Config/"
+import "../Topbar"
 
 Pane {
     id: root
@@ -25,7 +25,7 @@ Pane {
                     top: parent.top
                     bottom: parent.bottom
                 }
-                source: Quickshell.shellDir + "/bar/Components/" + modelData + ".qml"
+                source: Quickshell.shellDir + "/bar/" + modelData + ".qml"
                 onLoaded: {
                     if (leftLoader.modelData === "Workspaces") {
                         item.settings.screen = root.screen;
@@ -56,7 +56,7 @@ Pane {
                     top: parent.top
                     bottom: parent.bottom
                 }
-                source: Quickshell.shellDir + "/bar/Components/" + modelData + ".qml"
+                source: Quickshell.shellDir + "/bar/" + modelData + ".qml"
                 onLoaded: {
                     if (rightLoader.modelData === "Workspaces") {
                         item.settings.screen = root.screen;

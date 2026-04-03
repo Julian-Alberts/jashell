@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.UPower
 import Quickshell
-import "../../service/"
-import "../../popup"
+import "../service/"
+import "../popup"
 
 Rectangle {
     id: root

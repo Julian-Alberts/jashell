@@ -4,8 +4,8 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Controls
-import "./bar"
-import "./Sidebar/"
+import "./Components/Sidebar"
+import "./Components/Topbar/"
 import "./service/" as Service
 import "./Config/"
 

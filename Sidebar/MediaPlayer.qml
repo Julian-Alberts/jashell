@@ -1,8 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
-import "../../Components/Sidebar"
-import "../../service"
+import "../Components/Sidebar"
+import "../service"
 
 Column {
     id: root

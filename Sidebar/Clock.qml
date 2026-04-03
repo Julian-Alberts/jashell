@@ -1,5 +1,5 @@
-import "../../Components"
-import "../../Config"
+import "../Components"
+import "../Config"
 
 Clock {
     isVertical: true

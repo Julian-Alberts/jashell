@@ -7,7 +7,7 @@ Loader {
     required property string namespace
     property ShellScreen screen
     property QsWindow window
-    source: Quickshell.shellDir + "/" + namespace + "/Components/" + root.name + ".qml"
+    source: Quickshell.shellDir + "/" + namespace + "/" + root.name + ".qml"
     Binding {
         target: root.item
         property: "screen"

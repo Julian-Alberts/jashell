@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import Qt.labs.qmlmodels 1.0
 import Quickshell
-import "../../service/"
-import "../../Config/"
-import ".."
+import "../service/"
+import "../Config/"
+import "../Components/Topbar"
 
 TopBarComponent {
     id: root

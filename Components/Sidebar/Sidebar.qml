@@ -1,11 +1,11 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
-import "../service" as Service
-import "../Config" as Config
-import "../popup" as Popup
-import "./Components"
-import "../Components"
+import "../../service" as Service
+import "../../Config" as Config
+import "../../popup" as Popup
+import "../../Sidebar"
+import ".."
 
 Item {
     id: root

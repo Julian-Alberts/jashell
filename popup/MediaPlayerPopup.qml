@@ -5,7 +5,6 @@ import QtQuick
 import QtQuick.Controls
 import "../service"
 import "../Config"
-import "../bar"
 
 JaPopupWindow {
     id: root
