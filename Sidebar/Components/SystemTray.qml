@@ -1,3 +1,0 @@
-import "../../Components/Sidebar"
-
-SystemTray {}

@@ -1,5 +1,5 @@
 import Quickshell
-import "../../Components"
+import "../Components"
 
 RotateScreen {
     outputName: screen.name

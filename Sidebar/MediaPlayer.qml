@@ -1,10 +1,13 @@
 import QtQuick
+import Quickshell
 import Quickshell.Services.Mpris
-import "../../Components/Sidebar"
-import "../../service"
+import "../Components/Sidebar"
+import "../service"
 
 Column {
+    id: root
     spacing: 10
+    property QsWindow window
     anchors {
         left: parent.left
         right: parent.right
@@ -15,6 +18,7 @@ Column {
         delegate: MediaPlayer {
             required property MprisPlayer modelData
             width: parent.width
+            window: root.window
             player: modelData
         }
     }

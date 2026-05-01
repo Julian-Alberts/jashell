@@ -1,11 +1,11 @@
 import QtQuick
 import Quickshell.Services.Mpris
 import Quickshell
-import "../../service"
-import "../../popup"
-import "../../Config/"
-import "../../Components"
-import "../../Components/Ui"
+import "../service"
+import "../popup"
+import "../Config/"
+import "../Components"
+import "../Components/Ui"
 
 Loader {
     id: root

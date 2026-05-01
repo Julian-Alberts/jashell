@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell.Services.Pipewire
-import "../../Components"
+import "../Components"
 
 Row {
     id: root
