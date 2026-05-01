@@ -75,6 +75,7 @@ JaPopupWindow {
                     Image {
                         id: trackArt
                         anchors.centerIn: parent
+                        anchors.fill: parent
                         source: root.player.trackArtUrl
                         fillMode: Image.PreserveAspectFit
                         visible: source !== ""
