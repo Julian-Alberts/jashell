@@ -13,6 +13,7 @@ Singleton {
     property RotateScreen rotateScreen: adapter.rotateScreen
     property Clock clock: adapter.clock
     property var data: adapter
+    property Workspaces workspaces: adapter.workspaces
     FileView {
         path: Qt.resolvedUrl("../settings.json")
 
@@ -32,6 +33,7 @@ Singleton {
             property var layoutOverrides: []
             property RotateScreen rotateScreen: RotateScreen {}
             property Clock clock: Clock {}
+            property Workspaces workspaces: Workspaces {}
         }
     }
     function updateLayoutOverrides(overrides: var, fallback: Layout) {
@@ -143,5 +145,8 @@ Singleton {
         property string format: "yyyy-MM-dd hh:mm"
         property string verticalFormat: "yy-MM-dd hh:mm"
         property string separator: " "
+    }
+    component Workspaces: JsonObject {
+        property string showEmpty: "yes" // "yes", "no", "new"
     }
 }

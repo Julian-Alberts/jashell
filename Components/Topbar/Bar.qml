@@ -3,24 +3,40 @@ import QtQuick.Controls
 import Quickshell
 import "../../Config/"
 import "../Topbar"
+import ".."
 
 Pane {
     id: root
     property ShellScreen screen
     property Settings.Layout layout: Settings.getLayout(screen)
     anchors.fill: parent
-    Row {
+    DynCompRow {
+        componentNames: root.layout.topbar.components.left
+        screen: root.screen
+        anchors.left: parent.left
+    }
+    DynCompRow {
+        componentNames: root.layout.topbar.components.right
+        screen: root.screen
+        anchors.right: parent.right
+    }
+    component DynCompRow: Row {
+        id: root
+        required property list<string> componentNames
+        required property ShellScreen screen
         anchors {
-            left: parent.left
             verticalCenter: parent.verticalCenter
         }
-        height: root.height - 10
+        height: 20
         spacing: 20
         Repeater {
-            model: root.layout.topbar.components.left
-            Loader {
+            model: root.componentNames
+            DynComponent {
                 id: leftLoader
                 required property string modelData
+                namespace: "bar"
+                name: modelData
+                screen: root.screen
                 anchors {
                     top: parent.top
                     bottom: parent.bottom

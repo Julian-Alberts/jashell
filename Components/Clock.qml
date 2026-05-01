@@ -7,7 +7,7 @@ import "../Components/Ui"
 Item {
     id: root
     property bool isVertical: true
-    property string separator: " "
+    property string separator: Settings.clock.separator
     property string format: Settings.clock.format
     implicitHeight: layout.implicitHeight
     implicitWidth: layout.implicitWidth

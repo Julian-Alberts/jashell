@@ -6,6 +6,7 @@ import Niri as NiriConnection
 
 ListView {
     id: root
+    property Settings.Workspaces workspaceSettings: Settings.workspaces
     anchors {
         left: parent.left
         right: parent.right
@@ -15,6 +16,21 @@ ListView {
     delegate: Rectangle {
         id: workspaceRect
         property bool isHighlighted: model.isActive || hoverHandler.hovered
+        property string displayMode: {
+            const isEmpty = model.activeWindowId === 0;
+            switch (root.workspaceSettings.showEmpty) {
+                case 'no':
+                    return (!isEmpty || model.isActive) ? "normal" : "hidden"
+                case 'new':
+                    return (!isEmpty || model.isActive) ? "normal" : "new"
+                case 'yes': 
+                default:
+                    return "normal"
+
+            }
+        }
+        visible: displayMode !== 'hidden'
+        height: visible ? workspaceItem.height : 0
         color: Config.background
         border {
             color: isHighlighted ? Config.theme.colors.border.active : Config.theme.colors.border.inactive
@@ -26,7 +42,6 @@ ListView {
         bottomRightRadius: bottomLeftRadius
         z: isHighlighted ? 1 : 0
         width: 50
-        height: workspaceItem.height
         Column {
             id: workspaceItem
             property bool showWindows: model.isActive
@@ -43,7 +58,7 @@ ListView {
             }
 
             Text {
-                text: (model.name || model.index)
+                text: workspaceRect.displayMode === "new" ? "+" : (model.name || model.index)
                 color: Config.textColor
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
